@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:safe_app/constants.dart';
 
 class SocalIcon extends StatelessWidget {
@@ -24,11 +23,6 @@ class SocalIcon extends StatelessWidget {
             color: kPrimaryLightColor,
           ),
           shape: BoxShape.circle,
-        ),
-        child: SvgPicture.asset(
-          iconSrc!,
-          height: 20,
-          width: 20,
         ),
       ),
     );
