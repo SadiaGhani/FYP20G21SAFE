@@ -10,10 +10,6 @@ class UploadImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          "WELCOME TO SAFE",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
         const SizedBox(height: defaultPadding * 2),
         Row(
           children: [

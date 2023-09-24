@@ -18,7 +18,7 @@ class MobileFileUploadScreen extends StatelessWidget {
           desktop: Row(
             children: [
               Expanded(
-                child: UploadImage(), // Widget to display uploaded files
+                child: UploadImage(),
               ),
               Expanded(
                 child: UploadedFiles(), // Widget to display uploaded files
