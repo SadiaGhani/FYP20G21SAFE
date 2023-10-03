@@ -4,7 +4,7 @@ import 'package:safe_app/components/background.dart';
 import 'package:safe_app/responsive.dart';
 
 import 'components/upload_btn.dart';
-import 'components/uploadimg.dart';
+import 'components/UploadImage.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
