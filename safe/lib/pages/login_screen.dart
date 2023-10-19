@@ -10,83 +10,88 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: const Color(0XFFEEE9DA), // Background color
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          final screenHeight = MediaQuery.of(context).size.height;
+          final double screenHeight = MediaQuery.of(context).size.height;
+          // final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
           // Determine if it's a small or large screen based on height
-          bool isSmallScreen = screenHeight < 600;
+          bool isSmallScreen = screenHeight < 0;
 
           // Adjust padding and font sizes for small screens
           EdgeInsets contentPadding = isSmallScreen
-              ? const EdgeInsets.all(10.0)
-              : const EdgeInsets.all(40.0);
+              ? const EdgeInsets.all(100.0)
+              : const EdgeInsets.fromLTRB(10.0, 180.0, 10.0, 0.0);
           double welcomeTextFontSize = isSmallScreen ? 20.0 : 24.0;
 
-          return Stack(
-            children: <Widget>[
-              // Image in top-left corner
-              Positioned(
-                left: -15,
-                top: 0,
-                child: Image.asset(
-                  'assets/upr_corner.png',
-                  width: 100,
-                  height: 100,
-                ),
-              ),
-              Positioned(
-                right: -15,
-                top: -30,
-                child: Image.asset(
-                  'assets/safe_logo.png',
-                  width: 200,
-                  height: 200,
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Padding(
-                    padding: contentPadding,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Welcome Back!',
-                              style: TextStyle(
-                                fontSize: welcomeTextFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Image.asset(
-                                'assets/welcome.png',
-                                width: 100,
-                                height: 100,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
+          return SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                // Image in top-left corner
+                Positioned(
+                  left: -15,
+                  top: 0,
+                  child: Image.asset(
+                    'assets/upr_corner.png',
+                    width: 100,
+                    height: 100,
                   ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0XFF93BFCF), // Pink background
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
+                ),
+
+                Positioned(
+                  right: -15,
+                  top: -30,
+                  child: Image.asset(
+                    'assets/safe_logo.png',
+                    width: 200,
+                    height: 200,
+                  ),
+                ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: contentPadding,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Welcome Back!',
+                                style: TextStyle(
+                                  fontSize: welcomeTextFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Image.asset(
+                                  'assets/welcome.png',
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 40),
+                        ],
                       ),
                     ),
-                    child: Expanded(
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0XFF93BFCF), // Pink background
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                      ),
                       child: Padding(
-                        padding: contentPadding,
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 50),
@@ -146,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to "Sign In" page
-                                Navigator.pushNamed(context, '/uploadfiles');
+                                Navigator.pushNamed(context, '/menu');
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: const Color(
@@ -175,7 +180,7 @@ class LoginScreen extends StatelessWidget {
                                 const Text(
                                   "Do not have a account.No worries Just ",
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -196,24 +201,15 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 50),
+                            const SizedBox(height: 100),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: -14,
-                bottom: 0,
-                child: Image.asset(
-                  'assets/btm_corner.png',
-                  width: 100,
-                  height: 100,
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

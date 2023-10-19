@@ -1,0 +1,167 @@
+import 'package:flutter/material.dart';
+
+class AppDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Container(
+        color: Color.fromARGB(255, 251, 251, 251),
+        child: ListView(
+          padding: const EdgeInsets.all(10),
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0XFF6096B4),
+                borderRadius: BorderRadius.only(
+                  bottomLeft:
+                      Radius.circular(20), // Adjust the radius as needed
+                  bottomRight:
+                      Radius.circular(20),
+                  topLeft:
+                      Radius.circular(20), // Adjust the radius as needed
+                  topRight:
+                      Radius.circular(20), // Adjust the radius as needed
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // User profile image or icon
+                  CircleAvatar(
+                    backgroundImage: AssetImage(
+                        'assets/user.jpg'), // Replace with the actual user image
+                    radius: 30, // Adjust the radius as needed
+                  ),
+                  SizedBox(
+                      height:
+                          10), // Add some spacing between the image and user name
+                  Text(
+                    'User Name', // Replace with the user's name
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'user123@example.com', // Replace with the user's email or other info
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
+            ListTile(
+              leading: const Icon(
+                Icons.account_circle,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Profile',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle home option
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.notification_important,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Notifications',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle about option
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.settings,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Settings',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle settings option
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.shield,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Cyber Security Awarness',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/awarness');
+
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.help,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Help and support',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle about option
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.security,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Security',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle about option
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
+              title: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                // Handle about option
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

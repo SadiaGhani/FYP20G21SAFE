@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                 Image.asset(
                   'assets/welcome.png',
                   width: screenSize.width *
-                      0.4, // Adjust image size based on screen width
+                      0.6, // Adjust image size based on screen width
                 ),
                 const SizedBox(height: 100), // Use fractions for spacing
                 Column(

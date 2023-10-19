@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:open_file/open_file.dart';
+import 'package:video_player/video_player.dart';
 
 class FileViewerPage extends StatefulWidget {
   final PlatformFile? selectedFile;
@@ -22,10 +23,10 @@ class _FileViewerPageState extends State<FileViewerPage> {
   @override
   void initState() {
     super.initState();
-    print("Selected File: ${widget.selectedFile?.name}");
+    //print("Selected File: ${widget.selectedFile?.name}");
     if (widget.selectedFile != null) {
       _openSelectedFile(widget.selectedFile);
-      print("File Path: ${widget.selectedFile?.path}");
+      //print("File Path: ${widget.selectedFile?.path}");
     }
   }
 
@@ -57,6 +58,9 @@ class _FileViewerPageState extends State<FileViewerPage> {
             // Handle text-based files.
             final file = createFileFromBytesSync(fileData, selectedFile.name);
             _openTextFile(file.path);
+          } else if (_isEncryptedFile(selectedFile.name)) {
+            // Handle encrypted files with a custom message.
+            _showEncryptedFileMessage();
           }
         });
       } else {
@@ -65,6 +69,28 @@ class _FileViewerPageState extends State<FileViewerPage> {
     } else {
       print("No file selected.");
     }
+  }
+
+  void _showEncryptedFileMessage() {
+     print("enc1");
+    showDialog(      
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+         
+          title: Text("File is Encrypted"),
+          content: Text("The selected file is encrypted and cannot be Accessed."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   bool _isVideo(String fileName) {
@@ -80,6 +106,14 @@ class _FileViewerPageState extends State<FileViewerPage> {
   bool _isTextFile(String fileName) {
     final fileExtension = fileName.split('.').last.toLowerCase();
     return ['txt', 'pdf', 'docx'].contains(fileExtension);
+  }
+
+  bool _isEncryptedFile(String fileName) {
+
+     print('filename_$fileName');
+    final fileExtension = fileName.split('.').last.toLowerCase();print("enc3");
+    return ['enc'].contains(fileExtension);
+     
   }
 
   Future<void> _openTextFile(String filePath) async {
@@ -126,6 +160,7 @@ class _FileViewerPageState extends State<FileViewerPage> {
       );
     } else if (fileBytes != null) {
       final fileName = widget.selectedFile!.name;
+      // ignore: unused_local_variable
       final fileExtension = fileName.split('.').last.toLowerCase();
 
       if (_isImage(fileName)) {
@@ -156,7 +191,8 @@ class _FileViewerPageState extends State<FileViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("File Viewer"),
+        title: Text(widget.selectedFile!.name),
+        backgroundColor: const Color(0XFF6096B4),
       ),
       body: SingleChildScrollView(child: _buildFileViewer()),
     );
