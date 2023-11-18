@@ -49,6 +49,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.5.0
+  just_audio: 0.9.36
   #pointycastle: ^2.0.0
   
   
@@ -84,6 +85,10 @@ flutter:
     - assets/user.jpg
     - assets/aw1.png
     - assets/aw2.jpg
+    - assets/malarm.png
+    - assets/location.png
+    - assets/alarms.png
+    - assets/tune.mp3
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

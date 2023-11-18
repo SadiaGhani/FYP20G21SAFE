@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:safe/pages/alarms.dart';
+import 'package:safe/pages/awarness.dart';
+import 'package:safe/pages/login_screen.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:safe/pages/sign_up_screen.dart';
 import 'package:safe/pages/splash_screen.dart';
 import 'package:safe/pages/upload_file.dart';
 import 'package:safe/pages/welcome_screen.dart';
-import 'package:safe/pages/login_screen.dart';
-import 'package:safe/pages/awarness.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
         '/uploadfiles': (context) => const UploadFileScreen(),
         '/menu': (context) => MenuPage(),
         '/awarness': (context) => const AwarenessPage(),
+        '/alarms': (context) => AlarmsPage(),
       },
     );
   }
 }
-
