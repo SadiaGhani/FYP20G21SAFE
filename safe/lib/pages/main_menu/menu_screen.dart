@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'drawer.dart';
 
 class MenuPage extends StatelessWidget {
@@ -45,14 +46,14 @@ class MenuPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 100),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         const Text(
-                          ' Secure your \n android device\n now by safe',
+                          ' Secure your\nandroid device\nnow by safe',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -89,11 +90,10 @@ class MenuPage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
+                              FractionallySizedBox(
+                                widthFactor: 0.6,
                                 child: Image.asset(
                                   'assets/upfile.png',
-                                  width: 90,
                                   height: 80,
                                 ),
                               ),
@@ -119,12 +119,11 @@ class MenuPage extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                            FractionallySizedBox(
+                              widthFactor: 0.6,
                               child: Image.asset(
                                 'assets/dlost.png',
-                                width: 100,
-                                height: 100,
+                                height: 80,
                               ),
                             ),
                             const Text(
@@ -156,12 +155,11 @@ class MenuPage extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                            FractionallySizedBox(
+                              widthFactor: 0.6,
                               child: Image.asset(
                                 'assets/raccess.png',
-                                width: 100,
-                                height: 90,
+                                height: 80,
                               ),
                             ),
                             const Text(
@@ -185,16 +183,84 @@ class MenuPage extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                            FractionallySizedBox(
+                              widthFactor: 0.6,
                               child: Image.asset(
                                 'assets/intruder.png',
-                                width: 100,
-                                height: 100,
+                                height: 80,
                               ),
                             ),
                             const Text(
                               'Intruder Alert',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: screenSize.height * 0.2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/alarms');
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF6096B4),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FractionallySizedBox(
+                                widthFactor: 0.6,
+                                child: Image.asset(
+                                  'assets/malarm.png', // Add the path to your alarms image
+                                  height: 80,
+                                ),
+                              ),
+                              const Text(
+                                'Alarms',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color(0XFF6096B4),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FractionallySizedBox(
+                              widthFactor: 0.6,
+                              child: Image.asset(
+                                'assets/location.png', // Add the path to your location tracking image
+                                height: 80,
+                              ),
+                            ),
+                            const Text(
+                              'Location Tracking',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

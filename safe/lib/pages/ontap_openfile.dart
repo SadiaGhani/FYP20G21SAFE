@@ -110,15 +110,16 @@ class _FileViewerPageState extends State<FileViewerPage> {
 
   bool _isEncryptedFile(String fileName) {
 
-     print('filename_$fileName');
+    print('filename_$fileName');
     final fileExtension = fileName.split('.').last.toLowerCase();print("enc3");
     return ['enc'].contains(fileExtension);
-     
+  
   }
 
   Future<void> _openTextFile(String filePath) async {
     final result = await OpenFile.open(filePath);
     if (result.type == ResultType.done) {
+      // ignore: unnecessary_null_comparison
       if (result.message != null) {
         print("File opened with ${result.message}");
       } else {
