@@ -7,6 +7,7 @@ import 'package:safe/pages/sign_up_screen.dart';
 import 'package:safe/pages/splash_screen.dart';
 import 'package:safe/pages/upload_file.dart';
 import 'package:safe/pages/welcome_screen.dart';
+import 'package:safe/pages/location.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => MenuPage(),
         '/awarness': (context) => const AwarenessPage(),
         '/alarms': (context) => AlarmsPage(),
+        '/location': (context) => LocationTrackingPage(),
       },
     );
   }
