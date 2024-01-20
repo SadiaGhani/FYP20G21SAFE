@@ -89,6 +89,7 @@ flutter:
     - assets/malarm.png
     - assets/location.png
     - assets/alarms.png
+    - assets/logo.png
     - assets/tune.mp3
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

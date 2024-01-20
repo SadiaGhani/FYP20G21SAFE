@@ -108,7 +108,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
       print("SGFN:$newFileName");
       final bytes = file.bytes!;
 
-      final encryptedBytes = encryptBytes(bytes as List<int>);
+      final encryptedBytes = xorEncrypt(bytes as List<int>);
 
       newFile.writeAsBytesSync(encryptedBytes);
 
@@ -129,17 +129,14 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
     }
   }
 
-  Uint8List encryptBytes(List<int> bytes) {
-    // Replace this with your encryption logic
-    // Example: Simple XOR encryption for demonstration purposes
-    final key = [0x01, 0x02, 0x039]; // Replace with your encryption key
-    for (int i = 0; i < bytes.length; i++) {
-      bytes[i] ^= key[i % key.length];
+  Uint8List xorEncrypt(List<int> data) {
+    final key = [0x01, 0x02, 0x03]; // Replace with your encryption key
+    for (int i = 0; i < data.length; i++) {
+      data[i] ^= key[i % key.length];
     }
-    return Uint8List.fromList(bytes);
+    return Uint8List.fromList(data);
   }
 
-  // Decryption Function
   Future<void> decryptFile(PlatformFile file) async {
     final externalDirectory = await getExternalStorageDirectory();
     if (externalDirectory != null) {
@@ -159,7 +156,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
         final bytes = file.bytes!;
 
         // Decrypt the file content
-        final decryptedBytes = decryptBytes(bytes as List<int>);
+        final decryptedBytes = xorDecrypt(bytes as List<int>);
 
         newFile.writeAsBytesSync(decryptedBytes);
 
@@ -180,15 +177,11 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
     }
   }
 
-  Uint8List decryptBytes(List<int> bytes) {
-    // Replace this with your decryption logic
-    // Example: Simple XOR decryption for demonstration purposes
-    final key = [0x01, 0x02, 0x039]; // Replace with your decryption key
-    for (int i = 0; i < bytes.length; i++) {
-      bytes[i] ^= key[i % key.length];
-    }
-    return Uint8List.fromList(bytes);
+  Uint8List xorDecrypt(List<int> data) {
+    return xorEncrypt(data);
   }
+
+
 
   @override
   Widget build(BuildContext context) {

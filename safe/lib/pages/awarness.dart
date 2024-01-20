@@ -52,7 +52,7 @@ class AwarenessPage extends StatelessWidget {
                      Image.asset(
                         'assets/aw1.png',
                         width: 130,
-                        height: 130,
+                        height: 100,
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
