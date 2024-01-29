@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514645228763",
+    "project_id": "safe-authentication-efbbe",
+    "storage_bucket": "safe-authentication-efbbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514645228763:android:dd0145ffa5444befeee0fe",
+        "android_client_info": {
+          "package_name": "com.example.safe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAruqkWpw1vtW6dF2pnm-097GtWt3GcXoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
