@@ -110,7 +110,11 @@ class MenuPage extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
+                      child:GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/devicegotlost');
+                        },
+                         child: Container(
                         margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: const Color(0XFF6096B4),
@@ -135,6 +139,7 @@ class MenuPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
                       ),
                     ),
                   ],
@@ -204,80 +209,80 @@ class MenuPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: screenSize.height * 0.2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/alarms');
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: const Color(0XFF6096B4),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FractionallySizedBox(
-                                widthFactor: 0.6,
-                                child: Image.asset(
-                                  'assets/malarm.png', // Add the path to your alarms image
-                                  height: 80,
-                                ),
-                              ),
-                              const Text(
-                                'Alarms',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/location');
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: const Color(0XFF6096B4),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FractionallySizedBox(
-                                widthFactor: 0.6,
-                                child: Image.asset(
-                                  'assets/location.png', // Add the path to your location tracking image
-                                  height: 80,
-                                ),
-                              ),
-                              const Text(
-                                'Location Tracking',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   height: screenSize.height * 0.2,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       Expanded(
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Navigator.pushNamed(context, '/alarms');
+              //           },
+              //           child: Container(
+              //             margin: const EdgeInsets.all(10),
+              //             decoration: BoxDecoration(
+              //               color: const Color(0XFF6096B4),
+              //               borderRadius: BorderRadius.circular(20),
+              //             ),
+              //             child: Column(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: <Widget>[
+              //                 FractionallySizedBox(
+              //                   widthFactor: 0.6,
+              //                   child: Image.asset(
+              //                     'assets/malarm.png', // Add the path to your alarms image
+              //                     height: 80,
+              //                   ),
+              //                 ),
+              //                 const Text(
+              //                   'Alarms',
+              //                   style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontSize: 18,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       // Expanded(
+              //       //   child: GestureDetector(
+              //       //     onTap: () {
+              //       //       Navigator.pushNamed(context, '/location');
+              //       //     },
+              //       //     child: Container(
+              //       //       margin: const EdgeInsets.all(10),
+              //       //       decoration: BoxDecoration(
+              //       //         color: const Color(0XFF6096B4),
+              //       //         borderRadius: BorderRadius.circular(20),
+              //       //       ),
+              //       //       child: Column(
+              //       //         mainAxisAlignment: MainAxisAlignment.center,
+              //       //         children: <Widget>[
+              //       //           FractionallySizedBox(
+              //       //             widthFactor: 0.6,
+              //       //             child: Image.asset(
+              //       //               'assets/location.png', // Add the path to your location tracking image
+              //       //               height: 80,
+              //       //             ),
+              //       //           ),
+              //       //           const Text(
+              //       //             'Location Tracking',
+              //       //             style: TextStyle(
+              //       //               color: Colors.black,
+              //       //               fontSize: 18,
+              //       //             ),
+              //       //           ),
+              //       //         ],
+              //       //       ),
+              //       //     ),
+              //       //   ),
+              //       // ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           Positioned(
