@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:safe/pages/alarms.dart';
 import 'package:safe/pages/awarness.dart';
 import 'package:safe/pages/login_screen.dart';
-import 'package:safe/pages/device_got_lost_screen.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:safe/pages/sign_up_screen.dart';
 import 'package:safe/pages/splash_screen.dart';
@@ -41,14 +40,13 @@ class MyApp extends StatelessWidget {
       routes: {
         '/splash': (context) => const SplashScreen(),
         '/welcome': (context) => const WelcomeScreen(),
-        '/login': (context) =>  const LoginScreen(),
+        '/login': (context) =>  LoginScreen(),
         '/signup': (context) =>  SignupScreen(),
         '/uploadfiles': (context) => const UploadFileScreen(),
         '/menu': (context) => MenuPage(),
         '/awarness': (context) => const AwarenessPage(),
         '/alarms': (context) => AlarmsPage(),
         '/location': (context) => LocationTrackingPage(),
-        '/devicegotlost': (context) => const DeviceGotLostScreen(),
       },
     );
   }

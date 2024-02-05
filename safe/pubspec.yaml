@@ -93,7 +93,6 @@ flutter:
     - assets/alarms.png
     - assets/logo.png
     - assets/tune.mp3
-    - assets/dgl.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
