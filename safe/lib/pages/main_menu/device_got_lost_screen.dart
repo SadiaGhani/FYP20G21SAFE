@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe/pages/fake_shutdown_screen.dart';
 
 class DeviceGotLostScreen extends StatelessWidget {
   const DeviceGotLostScreen({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class DeviceGotLostScreen extends StatelessWidget {
                           buildTabContent('Remote Access'),
                           buildTabContent('Location Tracking'),
                           buildTabContent('Alarms'),
-                          buildTabContent('Fake Shutdown'),
+                          FakeShutdownScreen(), 
                         ],
                       ),
                     ),
