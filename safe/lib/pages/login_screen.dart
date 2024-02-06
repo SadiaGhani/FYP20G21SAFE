@@ -1,7 +1,56 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key});
+  LoginScreen({Key? key});
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+Future<void> signInWithEmailAndPassword(String email, String password) async {
+ // print("i am in function of sign innnnnnnnnnnnnnnnnnnn");
+  try {
+   // print("i am in truyyyyyyyyyyyyyyyyyyyyyyyy");
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    // The user is now signed in
+    print('User logged in: ${credential.user?.email}');
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    } else {
+      print('Error signing in: ${e.code}');
+    }
+  }
+}
+
+   
+
+  void _showErrorDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                //Navigator.pushNamed(context, '/menu'); 
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +199,16 @@ class LoginScreen extends StatelessWidget {
                             const SizedBox(height: 30),
                             ElevatedButton(
                               onPressed: () {
-                                // Navigate to "Sign In" page
-                                Navigator.pushNamed(context, '/menu');
+                                print("i am in login in butonnnnnnnnnnnnnnnn");
+                                String email = emailController.text;
+                                String password = passwordController.text;
+                                FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
+                                .then((value) {
+                                  print("Login Sucessfully");
+                                  Navigator.pushNamed(context, '/menu');       
+                                }
+                                );
+                               
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: const Color(
