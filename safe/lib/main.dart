@@ -9,6 +9,8 @@ import 'package:safe/pages/splash_screen.dart';
 import 'package:safe/pages/upload_file.dart';
 import 'package:safe/pages/welcome_screen.dart';
 import 'package:safe/pages/location.dart';
+import 'package:safe/pages/main_menu/device_got_lost_screen.dart';
+import 'package:safe/pages/fake_shutdown_screen.dart';
 //import 'firebase_options.dart';
 
 
@@ -47,6 +49,9 @@ class MyApp extends StatelessWidget {
         '/awarness': (context) => const AwarenessPage(),
         '/alarms': (context) => AlarmsPage(),
         '/location': (context) => LocationTrackingPage(),
+        // ignore: prefer_const_constructors
+        '/devicegotlost': (context) => DeviceGotLostScreen(),
+        '/fakeshutdown': (context) => const FakeShutdownScreen(),
       },
     );
   }
