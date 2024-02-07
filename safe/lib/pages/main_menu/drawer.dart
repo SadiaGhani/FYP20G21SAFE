@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:safe/pages/awarness.dart';
+import 'package:safe/pages/sign_up_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:safe/pages/google_signin_api.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -155,8 +159,14 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              onTap: () {
-                // Handle about option
+              onTap: () async {
+                await GoogleSignInApi.logout();
+                print("Logout Successful");
+
+               // After successful logout, navigate back to the sign-up page
+               Navigator.of(context).pushReplacement(MaterialPageRoute(
+                 builder: (context) => SignupScreen(), // Replace SignUpPage with your actual sign-up page
+                ));
               },
             ),
           ],

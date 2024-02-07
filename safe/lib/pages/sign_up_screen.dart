@@ -1,51 +1,54 @@
+//import 'dart:js';
+import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:safe/pages/google_signin_api.dart';
 
 
 class SignupScreen extends StatelessWidget {
-  //const SignupScreen({Key? key});
-
-  // googleLogin() async {
-  //   print("Google Login function");
-  //   GoogleSignIn _googleSignIn = GoogleSignIn( 
-  //     clientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
-  //   );
-  //   try {
-  //   var result = await _googleSignIn.signIn();
-  //   print(result);
-  // } catch (error) {
-  //   print(error);
-  // }
+  
 
   
 
-  Future<bool> googleLogin() async {
-  print("Google Login functioneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
-    
-  );
-
-  try {
-    var result = await _googleSignIn.signIn();
-
-    if (result != null) {
-      // navigator();
-      print(" i am in trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-      print(result);
-      return true;
-    } else {
-      // User canceled the Google sign-in
-      return false;
+  Future signIn(context) async {
+    print("i am in funtionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+    final user = await GoogleSignInApi.login();
+    print(user);
+    if(user == null){
+      print("Erorrrrrrrrrrrrrrrrr");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
+    }else{
+      print("sucessssssssssssss");
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => MenuPage(),
+        ));
     }
-  } catch (error) {
-    // Handle any errors during the sign-in process
-    print(" i am in errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-    print(error);
-    return false;
-  }
+  // print("Google Login functioneeeeeeeee)eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  // GoogleSignIn _googleSignIn = GoogleSignIn(
+  //   serverClientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
+    
+  // );
+
+  // try {
+  //   var result = await _googleSignIn.signIn();
+
+  //   if (result != null) {
+  //     // navigator();
+  //     print(" i am in trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  //     print(result);
+  //     return true;
+  //   } else {
+  //     // User canceled the Google sign-in
+  //     return false;
+  //   }
+  // } catch (error, stackTrace) {
+  // print(" i am in errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+  // print('Error signing in: $error');
+  // print('Stack trace: $stackTrace');
+  // return false;
+  // }
 }
 
 
@@ -317,12 +320,12 @@ void _showConfirmationDialog(BuildContext context) {
                         onPressed: () async {
                           print("I am in Google button");
 
-                          bool loginSuccess = await googleLogin();
+                          signIn(context);
 
-                          if (loginSuccess) {
-                          // Navigate to "Sign In" page only if Google login was successful
-                          Navigator.pushNamed(context, '/menu');
-                         }
+                        //   if (loginSuccess) {
+                        //   // Navigate to "Sign In" page only if Google login was successful
+                        //   Navigator.pushNamed(context, '/menu');
+                        //  }
                         },
                           
                         style: ElevatedButton.styleFrom(

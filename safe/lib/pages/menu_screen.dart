@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+//import 'package: google_signin_api.dart';
+import 'sign_up_screen.dart';
 
 class MenuPage extends StatelessWidget {
+  final GoogleSignInAccount user;
+
+  MenuPage({super.key, required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
