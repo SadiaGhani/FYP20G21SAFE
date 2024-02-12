@@ -12,14 +12,15 @@ import 'package:safe/pages/location.dart';
 import 'package:safe/pages/main_menu/device_got_lost_screen.dart';
 import 'package:safe/pages/fake_shutdown_screen.dart';
 import 'package:safe/pages/contact_us_screen.dart';
+import 'package:safe/pages/user_profile_screen.dart';
 //import 'firebase_options.dart';
 
 
 void main() async {
-  print(" Before initilization ");
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  print("Initialize completeeddddddddddddddddddddddddddddddddddddd");
+  // print(" Before initilization ");
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // print("Initialize completeeddddddddddddddddddddddddddddddddddddd");
   runApp(const MyApp());
 }
 // void main() async {
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/devicegotlost': (context) => DeviceGotLostScreen(),
         '/fakeshutdown': (context) => const FakeShutdownScreen(),
         '/contactus': (context) => const ContactUsScreen(),
+        '/userprofile': (context) => UserProfileScreen(),
       },
     );
   }

@@ -71,6 +71,7 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 // Handle home option
+                Navigator.pushNamed(context, '/userprofile');
               },
             ),
             ListTile(

@@ -199,7 +199,7 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                             const SizedBox(height: 30),
                             ElevatedButton(
                               onPressed: () {
-                                // Navigator.pushNamed(context, '/menu'); 
+                                Navigator.pushNamed(context, '/menu'); 
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
                                 String email = emailController.text;
                                 String password = passwordController.text;

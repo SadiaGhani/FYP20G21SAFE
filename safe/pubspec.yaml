@@ -96,6 +96,7 @@ flutter:
     - assets/tune.mp3
     - assets/fks_alarm.png
     - assets/contactus.png
+    - assets/profile_pic.jpeg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
