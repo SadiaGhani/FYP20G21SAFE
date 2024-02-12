@@ -1,85 +1,84 @@
 import 'package:flutter/material.dart';
 
-class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+class Post {
+  final String text;
+  final String imageUrl;
+  final List<Reply> replies;
 
-  @override
-  _NotificationsPageState createState() => _NotificationsPageState();
+  Post({required this.text, required this.imageUrl, required this.replies});
 }
 
-class _NotificationsPageState extends State<NotificationsPage> {
-  // Add notification data and logic here, e.g.,
-  List<Notification> notifications = [
-    // ... populate with notification objects
-  ];
+class Reply {
+  final String text;
 
-  void dismissNotification(Notification notification) {
-    // Remove notification from data and update UI
-    setState(() {
-      notifications.remove(notification);
-    });
-  }
+  Reply({required this.text});
+}
+
+class NotificationsPage extends StatelessWidget {
+  final List<Post> posts = [
+    Post(
+      text: 'Top 5 Cybersecurity Threats in 2024',
+      imageUrl:
+          'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fcyber-security&psig=AOvVaw1-gmUV5CX0SiTL4TSqu14a&ust=1707823022138000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCKCR9drWpYQDFQAAAAAdAAAAABAE',
+      replies: [
+        Reply(
+            text:
+                'I think ransomware attacks will continue to be a major threat. Organizations need to strengthen their defenses against them.'),
+        Reply(
+            text:
+                'Agreed. Phishing attacks are also on the rise and becoming more sophisticated.'),
+      ],
+    ),
+    Post(
+      text: 'Zero-Day Vulnerability Discovered in Popular Software',
+      imageUrl:
+          'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fcyber-security&psig=AOvVaw1-gmUV5CX0SiTL4TSqu14a&ust=1707823022138000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCKCR9drWpYQDFQAAAAAdAAAAABAE',
+      replies: [
+        Reply(
+            text:
+                'This is concerning. Patching systems as soon as updates are available is critical to mitigating risks associated with zero-day vulnerabilities.'),
+        Reply(
+            text:
+                'Absolutely. It highlights the importance of proactive security measures and regular software updates.'),
+      ],
+    ),
+    Post(
+      text: 'New Data Protection Regulations Coming into Effect',
+      imageUrl: 'https://via.placeholder.com/150',
+      replies: [
+        Reply(
+            text:
+                'Organizations need to ensure compliance with these regulations to avoid hefty fines and protect sensitive information.'),
+        Reply(
+            text:
+                'Indeed. Its a good opportunity for organizations to review and enhance their data protection policies and practices.'),
+      ],
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFEEE9DA),
-      body: Stack(
-        children: [
-          // ... (existing code, if applicable)
-
-          Center(
-            child: Container(
-              width: 300,
-              height: 400,
-              decoration: BoxDecoration(
-                color: Color(0XFF93BFCF),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Notifications',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // Display notifications in a list view
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: notifications.length,
-                      itemBuilder: (context, index) {
-                        final notification = notifications[index];
-                        return ListTile(
-                          title: Text(notification.title),
-                          subtitle: Text(notification.body),
-                          trailing: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () => dismissNotification(notification),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+      appBar: AppBar(
+        title: Text('Cybersecurity Notifications'),
+      ),
+      body: ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(posts[index].imageUrl),
             ),
-          ),
-        ],
+            title: Text(posts[index].text),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var reply in posts[index].replies) Text(reply.text),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
-}
-
-class Notification {
-  final String title;
-  final String body;
-
-  Notification(this.title, this.body);
 }
