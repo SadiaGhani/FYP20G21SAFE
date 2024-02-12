@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:safe/pages/alarms.dart';
 import 'package:safe/pages/fake_shutdown_screen.dart';
+import 'package:safe/pages/location.dart';
+import 'package:safe/pages/remoteWipeScreen.dart';
 
 class DeviceGotLostScreen extends StatelessWidget {
   const DeviceGotLostScreen({Key? key}) : super(key: key);
@@ -21,11 +24,11 @@ class DeviceGotLostScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                   color: const Color(0XFF6096B4),
-                 
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Align heading to the left
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start, // Align heading to the left
                   children: <Widget>[
                     // Main Heading
                     Text(
@@ -56,11 +59,11 @@ class DeviceGotLostScreen extends StatelessWidget {
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
-                          buildTabContent('Remote Wipe'),
+                          RemoteWipeScreen(),
                           buildTabContent('Remote Access'),
-                          buildTabContent('Location Tracking'),
-                          buildTabContent('Alarms'),
-                          FakeShutdownScreen(), 
+                          LocationTrackingPage(),
+                          AlarmsPage(),
+                          FakeShutdownScreen(),
                         ],
                       ),
                     ),
@@ -78,7 +81,8 @@ class DeviceGotLostScreen extends StatelessWidget {
     return Tab(
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width / 5, // Adjust based on the number of tabs
+          maxWidth: MediaQuery.of(context).size.width /
+              5, // Adjust based on the number of tabs
         ),
         alignment: Alignment.center,
         child: Text(
