@@ -4,7 +4,6 @@ import 'package:safe/pages/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
 
-
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,12 +19,9 @@ class AppDrawer extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                   bottomLeft:
                       Radius.circular(20), // Adjust the radius as needed
-                  bottomRight:
-                      Radius.circular(20),
-                  topLeft:
-                      Radius.circular(20), // Adjust the radius as needed
-                  topRight:
-                      Radius.circular(20), // Adjust the radius as needed
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20), // Adjust the radius as needed
+                  topRight: Radius.circular(20), // Adjust the radius as needed
                 ),
               ),
               child: Column(
@@ -86,6 +82,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                Navigator.pushNamed(context, '/notifications');
                 // Handle about option
               },
             ),
@@ -101,6 +98,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                Navigator.pushNamed(context, '/settings');
                 // Handle settings option
               },
             ),
@@ -117,7 +115,6 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pushNamed(context, '/awarness');
-
               },
             ),
             ListTile(
@@ -165,9 +162,10 @@ class AppDrawer extends StatelessWidget {
                 await GoogleSignInApi.logout();
                 print("Logout Successful");
 
-               // After successful logout, navigate back to the sign-up page
-               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                 builder: (context) => SignupScreen(), // Replace SignUpPage with your actual sign-up page
+                // After successful logout, navigate back to the sign-up page
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) =>
+                      SignupScreen(), // Replace SignUpPage with your actual sign-up page
                 ));
               },
             ),
