@@ -4,6 +4,7 @@ import 'package:safe/pages/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
 
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -130,7 +131,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle about option
+                Navigator.pushNamed(context, '/contactus');
               },
             ),
             ListTile(
