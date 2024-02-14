@@ -12,6 +12,8 @@ class _SettingsPageState extends State<SettingsPage> {
   bool isNotificationsEnabled = true;
   String language = "English";
   bool isDarkModeEnabled = false;
+  bool isSoundEnabled = true;
+  int fontSize = 16;
 
   void updateSetting(String settingName, dynamic newValue) {
     // Update settings based on settingName and newValue
@@ -23,7 +25,12 @@ class _SettingsPageState extends State<SettingsPage> {
         language = newValue;
       } else if (settingName == "darkMode") {
         isDarkModeEnabled = newValue;
+      } else if (settingName == "sound") {
+        isSoundEnabled = newValue;
+      } else if (settingName == "fontSize") {
+        fontSize = newValue;
       }
+
       // ... handle other settings
     });
   }
@@ -96,6 +103,37 @@ class _SettingsPageState extends State<SettingsPage> {
                       onChanged: (value) => updateSetting("darkMode", value),
                       activeTrackColor: Colors.lightGreenAccent,
                       activeColor: Colors.green,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Sound'),
+                    trailing: Switch(
+                      value: isSoundEnabled,
+                      onChanged: (value) => updateSetting("sound", value),
+                      activeTrackColor: Colors.lightGreenAccent,
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    title: Text('Font Size'),
+                    trailing: DropdownButton<int>(
+                      value: fontSize,
+                      items: [
+                        DropdownMenuItem(
+                          value: 16,
+                          child: Text("Small"),
+                        ),
+                        DropdownMenuItem(
+                          value: 18,
+                          child: Text("Medium"),
+                        ),
+                        DropdownMenuItem(
+                          value: 20,
+                          child: Text("Large"),
+                        ),
+                      ],
+                      onChanged: (value) => updateSetting("fontSize", value),
                     ),
                   ),
                   // ... add more settings options

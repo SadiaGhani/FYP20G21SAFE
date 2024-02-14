@@ -59,7 +59,9 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0XFFEEE9DA),
       appBar: AppBar(
+        backgroundColor: Color(0XFF93BFCF),
         title: Text('Cybersecurity Notifications'),
       ),
       body: ListView.builder(
