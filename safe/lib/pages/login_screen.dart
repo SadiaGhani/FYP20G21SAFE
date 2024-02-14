@@ -1,13 +1,16 @@
+//import 'dart:js';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:safe/pages/main_menu/menu_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key});
+ LoginScreen({Key? key});
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-Future<void> signInWithEmailAndPassword(String email, String password) async {
+  
+ final TextEditingController emailController = TextEditingController();
+ final TextEditingController passwordController = TextEditingController();
+ Future<void> signInWithEmailAndPassword(context,String email, String password) async {
  // print("i am in function of sign innnnnnnnnnnnnnnnnnnn");
   try {
    // print("i am in truyyyyyyyyyyyyyyyyyyyyyyyy");
@@ -17,14 +20,33 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
     );
     // The user is now signed in
     print('User logged in: ${credential.user?.email}');
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => MenuPage(),
+        ));
+    
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
+    if (e.code == 'invalid-email') {
+      print('invalid-email');
+      String title = "Invalid-email";
+      String message = "Your Provided Email is incorrect or does not exist";
+      _showErrorDialog(context,title,message);
+    } else if (e.code == 'invalid-credential') {
       print('Wrong password provided for that user.');
-    } else {
+      String title = "Invalid-credential";
+      String message = "Wrong Credentials provided for that user";
+      _showErrorDialog(context,title,message);
+      } else {
       print('Error signing in: ${e.code}');
-    }
+      String title = "Error signing in";
+      String message = "Error Ocurred while signing in";
+      _showErrorDialog(context,title,message);
+      }
+      if (email.isEmpty && password.isEmpty) {
+                                print("Email or password is empty");
+                                String title = "Email and Password is Missing";
+                                String message = "Email and password feilds are empty"; 
+                                _showErrorDialog(context,title,message);
+                                }
   }
 }
 
@@ -51,8 +73,9 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
     );
   }
 
-
+  
   @override
+  
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -151,7 +174,7 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                                 borderRadius: BorderRadius.circular(
                                     10), // Rounded corners
                               ),
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Row(
                                   children: <Widget>[
@@ -159,8 +182,9 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
+                                        controller: emailController, 
                                         decoration: InputDecoration(
-                                          hintText: 'Email',
+                                          hintText: 'Email', 
                                           border: InputBorder.none,
                                         ),
                                       ),
@@ -177,7 +201,7 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                                 borderRadius: BorderRadius.circular(
                                     10), // Rounded corners
                               ),
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Row(
                                   children: <Widget>[
@@ -185,6 +209,7 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
+                                        controller: passwordController, // Assign the controller
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           hintText: 'Password',
@@ -197,18 +222,18 @@ Future<void> signInWithEmailAndPassword(String email, String password) async {
                               ),
                             ),
                             const SizedBox(height: 30),
+                            
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, '/menu'); 
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
-                                String email = emailController.text;
+                                String email = emailController.text.trim();  // Ensure trimming white spaces
                                 String password = passwordController.text;
-                                FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
-                                .then((value) {
-                                  print("Login Sucessfully");
-                                  Navigator.pushNamed(context, '/menu');       
-                                }
-                                );
+                                print("what is going");
+                                print(email);
+                                print(password);
+                                
+                                signInWithEmailAndPassword(context,email,password);
                                
                               },
                               style: ElevatedButton.styleFrom(

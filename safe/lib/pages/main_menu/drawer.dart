@@ -3,6 +3,43 @@ import 'package:safe/pages/awarness.dart';
 import 'package:safe/pages/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
+Future<void> signOut(context) async {
+  bool isGoogleUser = await GoogleSignIn().isSignedIn();
+  try {
+    //bool isGoogleUser = await checkGoogleSignInStatus();
+    if (isGoogleUser) {
+       try {
+        await FirebaseAuth.instance.signOut();
+                 print("User signed out successfully usignemail and password");
+                 Navigator.pushNamed(context, '/signup');
+                 } catch (e) {
+                  print("Error signing out: $e");
+                }
+      
+    } else {
+      
+      try {
+        await GoogleSignInApi.logout();
+                 print("User signed out successfully from Google");
+                 Navigator.pushNamed(context, '/signup');
+                 } catch (e) {
+                  print("Error signing out: $e");
+                }
+      //Navigator.pushNamed(context, '/signup');
+    }
+  } catch (e) {
+    print("Error signing out: $e");
+  }
+ 
+}
+
+
+
+
+
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -167,6 +204,21 @@ class AppDrawer extends StatelessWidget {
                   builder: (context) =>
                       SignupScreen(), // Replace SignUpPage with your actual sign-up page
                 ));
+                //signOut(context);
+              //   try {
+              //   await FirebaseAuth.instance.signOut();
+              //   print("User signed out successfully");
+              //   Navigator.pushNamed(context, '/signup');
+              //  } catch (e) {
+              //  print("Error signing out: $e");
+              //  }
+               try{
+               await GoogleSignInApi.logout();
+                 print("User signed out successfully from Google");
+                 Navigator.pushNamed(context, '/signup');
+                 } catch (e) {
+                  print("Error signing out: $e");
+                }
               },
             ),
           ],
