@@ -1,21 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:safe/pages/alarms.dart';
 import 'package:safe/pages/awarness.dart';
-import 'package:safe/pages/login_screen.dart';
-import 'package:safe/pages/main_menu/menu_screen.dart';
-import 'package:safe/pages/sign_up_screen.dart';
-import 'package:safe/pages/splash_screen.dart';
-import 'package:safe/pages/upload_file.dart';
-import 'package:safe/pages/welcome_screen.dart';
-import 'package:safe/pages/location.dart';
-import 'package:safe/pages/main_menu/device_got_lost_screen.dart';
-import 'package:safe/pages/fake_shutdown_screen.dart';
 import 'package:safe/pages/contact_us_screen.dart';
-import 'package:safe/pages/user_profile_screen.dart';
+import 'package:safe/pages/fake_shutdown_screen.dart';
+import 'package:safe/pages/location.dart';
+import 'package:safe/pages/login_screen.dart';
+import 'package:safe/pages/main_menu/device_got_lost_screen.dart';
+import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:safe/pages/notifications.dart';
 import 'package:safe/pages/remoteWipeScreen.dart';
 import 'package:safe/pages/settings.dart';
+import 'package:safe/pages/sign_up_screen.dart';
+import 'package:safe/pages/splash_screen.dart';
+import 'package:safe/pages/threat.dart';
+import 'package:safe/pages/upload_file.dart';
+import 'package:safe/pages/user_profile_screen.dart';
+import 'package:safe/pages/welcome_screen.dart';
 //import 'firebase_options.dart';
 
 void main() async {
@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
         '/remoteWipe': (context) => const RemoteWipeScreen(),
         '/notifications': (context) => NotificationsPage(),
         '/settings': (context) => SettingsPage(),
+        '/threats': (context) => ThreatIntelligencePage(),
       },
     );
   }

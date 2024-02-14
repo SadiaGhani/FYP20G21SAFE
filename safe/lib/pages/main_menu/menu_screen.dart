@@ -114,32 +114,32 @@ class MenuPage extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(context, '/devicegotlost');
                         },
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0XFF6096B4),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FractionallySizedBox(
-                              widthFactor: 0.6,
-                              child: Image.asset(
-                                'assets/dlost.png',
-                                height: 80,
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF6096B4),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FractionallySizedBox(
+                                widthFactor: 0.6,
+                                child: Image.asset(
+                                  'assets/dlost.png',
+                                  height: 80,
+                                ),
                               ),
-                            ),
-                            const Text(
-                              'Device lost',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              const Text(
+                                'Device lost',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
                       ),
                     ),
                   ],
@@ -179,30 +179,35 @@ class MenuPage extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0XFF6096B4),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FractionallySizedBox(
-                              widthFactor: 0.6,
-                              child: Image.asset(
-                                'assets/intruder.png',
-                                height: 80,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/threats');
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF6096B4),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FractionallySizedBox(
+                                widthFactor: 0.6,
+                                child: Image.asset(
+                                  'assets/intruder.png',
+                                  height: 80,
+                                ),
                               ),
-                            ),
-                            const Text(
-                              'Intruder Alert',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              const Text(
+                                'Intruder Alert',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
