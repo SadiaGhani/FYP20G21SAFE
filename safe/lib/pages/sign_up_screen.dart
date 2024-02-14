@@ -66,26 +66,72 @@ void signUpWithEmailAndPassword(String email, String password, BuildContext cont
       });
 }
 
-void _showConfirmationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Account Created'),
-        content: Text('Your account has been created successfully.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-              Navigator.pushNamed(context, '/menu'); // Navigate to the menu page
-            },
-            child: Text('OK'),
+  void _showTermsAndConditionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Terms and Conditions'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    'Here are the terms and conditions of the app. We take your data security seriously. The SAFE app employs encryption and other security measures to protect your personal information and data. '),
+                Text(
+                    ' The remote data wipe feature allows you to erase data from your device remotely. Use this feature with caution, as it will permanently delete all data on your device.'),
+                Text(
+                    'The SAFE app is intended for personal use only. You may not use the app for any illegal or unauthorized purpose.'),
+                Text(
+                    'We reserve the right to modify or update these terms and conditions at any time. Any changes will be effective immediately upon posting.'),
+              ],
+            ),
           ),
-        ],
-      );
-    },
-  );
-}
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MenuPage(),
+                  ),
+                );
+              },
+              child: Text('Agree'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Account Created'),
+          content: Text('Your account has been created successfully.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                _showTermsAndConditionsDialog(
+                    context); // Show terms and conditions dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 
 
