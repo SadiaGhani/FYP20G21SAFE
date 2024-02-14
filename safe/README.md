@@ -1,6 +1,6 @@
 # safe
 
-A new Flutter project.
+SAFE is a mobile security application for android devices.
 
 ## Getting Started
 
