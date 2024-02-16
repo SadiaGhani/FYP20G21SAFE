@@ -20,9 +20,7 @@ class LoginScreen extends StatelessWidget {
     );
     // The user is now signed in
     print('User logged in: ${credential.user?.email}');
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => MenuPage(),
-        ));
+    Navigator.pushNamed(context, '/menu');
     
   } on FirebaseAuthException catch (e) {
     if (e.code == 'invalid-email') {
@@ -225,7 +223,7 @@ class LoginScreen extends StatelessWidget {
                             
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/menu'); 
+                                //Navigator.pushNamed(context, '/menu'); 
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
                                 String email = emailController.text.trim();  // Ensure trimming white spaces
                                 String password = passwordController.text;
