@@ -1,3 +1,4 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class ThreatIntelligencePage extends StatefulWidget {
@@ -41,6 +42,25 @@ class _ThreatIntelligencePageState extends State<ThreatIntelligencePage> {
     },
     // Add more threat data as needed
   ];
+  List<charts.Series<ThreatData, String>> _createSampleData() {
+    final data = [
+      ThreatData('SQL Injection', 10000),
+      ThreatData('XSS', 5000),
+      ThreatData('Brute Force', 7500),
+      ThreatData('Phishing', 12000),
+      ThreatData('Malware', 15000),
+    ];
+
+    return [
+      charts.Series<ThreatData, String>(
+        id: 'Threats',
+        domainFn: (ThreatData threat, _) => threat.name,
+        measureFn: (ThreatData threat, _) => threat.losses,
+        data: data,
+        labelAccessorFn: (ThreatData threat, _) => '${threat.losses}',
+      ),
+    ];
+  }
 
   List<Map<String, dynamic>> filteredThreats = [];
 
@@ -98,15 +118,29 @@ class _ThreatIntelligencePageState extends State<ThreatIntelligencePage> {
                       Text('Losses: ${filteredThreats[index]['losses']}'),
                     ],
                   ),
-                  // You can add more information about the threat
-                  // e.g., date, severity, description, etc.
-                  // onTap: () => navigateToThreatDetailPage(filteredThreats[index]),
                 );
               },
+            ),
+          ),
+          // Inside your build method after the ListView.builder
+
+          Container(
+            height: 300,
+            padding: EdgeInsets.all(16.0),
+            child: charts.BarChart(
+              _createSampleData(),
+              animate: true,
             ),
           ),
         ],
       ),
     );
   }
+}
+
+class ThreatData {
+  final String name;
+  final int losses;
+
+  ThreatData(this.name, this.losses);
 }
