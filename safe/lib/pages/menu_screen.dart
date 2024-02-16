@@ -4,9 +4,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'sign_up_screen.dart';
 
 class MenuPage extends StatelessWidget {
-  final GoogleSignInAccount user;
+  // final String name;
+  // final String email;
+  // final String picture;
 
-  MenuPage({super.key, required this.user});
+  // MenuPage({required this.name, required this.email, required this.picture, required Type userProfileScreen});
+  //final GoogleSignInAccount user;
+
+  //MenuPage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {

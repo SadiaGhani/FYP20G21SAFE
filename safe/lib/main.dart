@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:safe/pages/alarms.dart';
 import 'package:safe/pages/awarness.dart';
@@ -19,10 +20,10 @@ import 'package:safe/pages/welcome_screen.dart';
 //import 'firebase_options.dart';
 
 void main() async {
-  // print(" Before initilization ");
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // print("Initialize completeeddddddddddddddddddddddddddddddddddddd");
+  print(" Before initilization ");
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  print("Initialize completeeddddddddddddddddddddddddddddddddddddd");
   runApp(const MyApp());
 }
 // void main() async {
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/devicegotlost': (context) => DeviceGotLostScreen(),
         '/fakeshutdown': (context) => const FakeShutdownScreen(),
         '/contactus': (context) => const ContactUsScreen(),
-        '/userprofile': (context) => UserProfileScreen(),
+        '/userprofile': (context) => UserProfileScreen(name: '', email: '', picture: ''),
         '/remoteWipe': (context) => const RemoteWipeScreen(),
         '/notifications': (context) => NotificationsPage(),
         '/settings': (context) => SettingsPage(),

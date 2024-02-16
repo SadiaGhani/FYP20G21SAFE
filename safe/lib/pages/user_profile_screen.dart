@@ -1,6 +1,53 @@
+//import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:safe/pages/google_signin_api.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Future<void> fetchData() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final name = prefs.getString('name');
+//   final email = prefs.getString('email');
+//   final picture = prefs.getString('picture');
+
+//   // Now you can use the retrieved data as needed.
+//   print('Name: $name, Email: $email, Picture: $picture');
+// import 'package:shared_preferences/shared_preferences.dart';
+
+// class UserData {
+//   final String name;
+//   final String email;
+//   final String picture;
+
+//   UserData({
+//     required this.name,
+//     required this.email,
+//     required this.picture,
+//   });
+  
+// }
+
+// Future<UserData> fetchData() async {
+//   print("i am fectcccccccccccccccccccccccccccccccc");
+//   final prefs = await SharedPreferences.getInstance();
+//   final name = prefs.getString('name') ?? '';
+//   final email = prefs.getString('email') ?? '';
+//   final picture = prefs.getString('picture') ?? '';
+//   print('Name: $name, Email: $email, Picture: $picture');
+//   return UserData(name: name, email: email, picture: picture);
+// }
 
 class UserProfileScreen extends StatelessWidget {
+  
+
+  final String name;
+  final String email;
+  final String picture;
+  final VoidCallback onNavigateToMenu;
+
+  UserProfileScreen({required this.name, required this.email, required this.picture, VoidCallback? onNavigateToMenu})
+      : onNavigateToMenu = onNavigateToMenu ?? (() {});  // Provide a default empty function if not provided
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,11 +64,19 @@ class UserProfileScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/profile_pic.jpeg'),
+                    backgroundImage: NetworkImage(picture),
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    'Bushra Farooq',
+                   Text(
+                     "Welcome",
+                     style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 20,
+                     fontWeight: FontWeight.bold,
+                      ),
+                      ),
+                  Text( 
+                    name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -30,7 +85,7 @@ class UserProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'Software Engineer',
+                     email,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -65,7 +120,7 @@ class UserProfileScreen extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Name'),
-                      subtitle: Text('Bushra Farooq'),
+                      subtitle: Text(name),
                       onTap: () {
                         // Handle tile tap
                       },
@@ -73,7 +128,7 @@ class UserProfileScreen extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Email'),
-                      subtitle: Text('bushra69@gmail.com'),
+                      subtitle: Text(email),
                       onTap: () {
                         // Handle tile tap
                       },
@@ -81,7 +136,7 @@ class UserProfileScreen extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Address'),
-                      subtitle: Text('TajhBagh, Lahore'),
+                      subtitle: Text('Lahore, Pakistan'),
                       onTap: () {
                         // Handle tile tap
                       },
@@ -96,10 +151,16 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.logout_outlined),
-                      title: Text('Logout'),
+                      title: Text('Remove Google Account'),
                       subtitle: Text('see you again.!'),
-                      onTap: () {
-                        // Handle tile tap
+                      onTap: () async{
+                        try{
+                        await GoogleSignInApi.logout();
+                        print("User signed out successfully from Google");
+                        Navigator.pushNamed(context, '/signup');
+                        } catch (e) {
+                         print("Error signing out: $e");
+                        }
                       },
                     ),
                   ],
@@ -112,3 +173,20 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 }
+// void main(context) async {
+//   // Assuming this is in an asynchronous function or a Flutter widget method
+
+//   try {
+//     UserData userData = await fetchData();
+//     print("hyeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+//     // Now you can use the userData as needed
+//     print('Name: ${userData.name}, Email: ${userData.email}, Picture: ${userData.picture}');
+
+//     // You can navigate to the UserProfileScreen and pass the userData
+//     Navigator.of(context).pushNamed('/userprofile', arguments: userData);
+
+//   } catch (error) {
+//     print('Erroryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy fetching user data: $error');
+//     // Handle the error as needed
+//   }
+// }

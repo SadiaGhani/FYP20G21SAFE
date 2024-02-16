@@ -43,6 +43,7 @@ dependencies:
   encrypt: ^5.0.3
   google_sign_in: ^6.1.5
   google_sign_in_android: ^6.1.21
+  shared_preferences: ^2.2.2
 
   
 

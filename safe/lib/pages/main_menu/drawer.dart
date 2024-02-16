@@ -4,6 +4,8 @@ import 'package:safe/pages/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:safe/pages/sign_up_screen.dart';
+import 'package:safe/pages/user_profile_screen.dart';
 
 
 Future<void> signOut(context) async {
@@ -102,10 +104,34 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              onTap: () {
-                // Handle home option
-                Navigator.pushNamed(context, '/userprofile');
-              },
+             onTap: () async {
+               //Navigator.pushNamed(context, '/userprofile');
+               final user = await GoogleSignInApi.login();
+               String name = user?.displayName ?? "N/A";
+                String email = user?.email ?? "N/A";
+               String picture = user?.photoUrl ?? "N/A";
+              Navigator.push(
+             context,
+             MaterialPageRoute(
+        builder: (context) => UserProfileScreen(
+          name: name,
+          email: email,
+          picture: picture,
+        ),
+      ),
+    );
+  // Handle home option
+  // final user = await signIn();  // Assuming signIn returns user data
+  // Navigator.pushNamed(
+  //   context,
+  //   '/userprofile',
+  //   arguments: {
+  //     'name': user.displayName ?? "N/A",
+  //     'email': user.email ?? "N/A",
+  //     'picture': user.photoUrl ?? "N/A",
+  //   },
+  // );
+},
             ),
             ListTile(
               leading: const Icon(
@@ -205,20 +231,20 @@ class AppDrawer extends StatelessWidget {
                       SignupScreen(), // Replace SignUpPage with your actual sign-up page
                 ));
                 //signOut(context);
-              //   try {
-              //   await FirebaseAuth.instance.signOut();
-              //   print("User signed out successfully");
-              //   Navigator.pushNamed(context, '/signup');
-              //  } catch (e) {
-              //  print("Error signing out: $e");
-              //  }
-               try{
-               await GoogleSignInApi.logout();
-                 print("User signed out successfully from Google");
-                 Navigator.pushNamed(context, '/signup');
-                 } catch (e) {
-                  print("Error signing out: $e");
-                }
+                try {
+                await FirebaseAuth.instance.signOut();
+                print("User signed out successfully");
+                Navigator.pushNamed(context, '/signup');
+               } catch (e) {
+               print("Error signing out: $e");
+               }
+              //  try{
+              //  await GoogleSignInApi.logout();
+              //    print("User signed out successfully from Google");
+              //    Navigator.pushNamed(context, '/signup');
+              //    } catch (e) {
+              //     print("Error signing out: $e");
+              //   }
               },
             ),
           ],

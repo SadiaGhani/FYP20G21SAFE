@@ -1,30 +1,85 @@
 //import 'dart:js';
-import 'package:safe/pages/main_menu/menu_screen.dart';
+import 'package:safe/pages/user_profile_screen.dart';
+import 'package:safe/pages/menu_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SignupScreen extends StatelessWidget {
   
 
-  
+// Future<void> signIn(context) async {
+//   print("I am in the function");
+//   final user = await GoogleSignInApi.login();
+//   print(user);
 
-  Future signIn(context) async {
-    print("i am in funtionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-    final user = await GoogleSignInApi.login();
-    print(user);
-    if(user == null){
-      print("Erorrrrrrrrrrrrrrrrr");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
-    }else{
-      print("sucessssssssssssss");
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => MenuPage(),
-        ));
-    }
+//   if (user == null) {
+//     print("Error");
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
+//   } else {
+//     print("Success");
+
+//     String name = user.displayName ?? "N/A";
+//     String email = user.email ?? "N/A";
+//     String picture = user.photoUrl ?? "N/A";
+
+//     // Show UserProfileScreen
+//     Navigator.pushReplacement(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => UserProfileScreen(
+//           name: name,
+//           email: email,
+//           picture: picture,
+//         ),
+//       ),
+//     );
+
+//     // Delay for 3 seconds
+//     print("i am delayingggggggggggggggggggggggggggggggggggggggggggggg");
+//     await Future.delayed(Duration(seconds: 1));   
+//     Navigator.pushNamed(context, '/menu');
+//   }
+// }
+
+Future<void> signIn(BuildContext context) async {
+  print("I am in the function");
+  final user = await GoogleSignInApi.login();
+  print(user);
+
+  if (user == null) {
+    print("Error");
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
+  } else {
+    print("Success");
+
+    String name = user.displayName ?? "N/A";
+    String email = user.email ?? "N/A";
+    String picture = user.photoUrl ?? "N/A";
+
+    // Pass sign up data to UserProfileScreen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserProfileScreen(
+          name: name,
+          email: email,
+          picture: picture,
+        ),
+      ),
+    );
+    // Delay for 3 seconds
+    await Future.delayed(Duration(seconds: 2));
+
+    // Open MenuPage
+    Navigator.pushNamed(context, '/menu');
+  }
+}
+
   // print("Google Login functioneeeeeeeee)eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
   // GoogleSignIn _googleSignIn = GoogleSignIn(
   //   serverClientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
@@ -49,7 +104,6 @@ class SignupScreen extends StatelessWidget {
   // print('Stack trace: $stackTrace');
   // return false;
   // }
-}
 
 
 
@@ -96,12 +150,7 @@ void signUpWithEmailAndPassword(String email, String password, BuildContext cont
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MenuPage(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/menu');
               },
               child: Text('Agree'),
             ),
@@ -157,26 +206,20 @@ void signUpWithEmailAndPassword(String email, String password, BuildContext cont
   }
 
   bool isValidPhoneNumber(String phoneNumber) {
-  // Implement your phone number validation logic. This is a basic example.
-  // You might want to use regular expressions or other methods for more robust validation.
   return phoneNumber.length == 11 && phoneNumber.startsWith('0');
   }
 
 
   bool isValidPassword(String password) {
-  // Basic check for a minimum length of the password. You can customize this based on your requirements.
   return password.length >= 6;
   }
 
   bool isValidEmail(String email) {
-  // Basic check for a valid email address using a simple regular expression.
-  // You might want to use a more sophisticated email validation library.
   final emailRegExp = RegExp(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
   return emailRegExp.hasMatch(email);
   }
 
   bool isValidName(String value) {
-  // Basic check for alphabets only. You can customize this based on your requirements.
   final RegExp alphaRegExp = RegExp(r'^[a-zA-Z ]+$');
   return alphaRegExp.hasMatch(value);
 }
