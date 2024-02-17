@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:safe/pages/azure.dart';
 import 'package:safe/pages/ontap_openfile.dart';
 
 class UploadFileScreen extends StatefulWidget {
@@ -50,6 +51,9 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
               final newFile = File(filePath);
               if (file.bytes != null) {
                 newFile.writeAsBytesSync(file.bytes!);
+                print("File saved locally: $fileName");
+                // ignore: use_build_context_synchronously
+                await uploadFileToAzure(newFile, context);
                 print("e1");
                 setState(() {
                   recentFiles.add(PlatformFile(
