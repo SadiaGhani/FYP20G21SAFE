@@ -181,7 +181,50 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
     return xorEncrypt(data);
   }
 
-
+  Future<void> _showCodeInputDialog(PlatformFile file) async {
+    String? code;
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Enter Code 8 digits to Hide File"),
+          content: TextField(
+            onChanged: (value) {
+              code = value;
+            },
+            decoration: InputDecoration(hintText: "Enter Code 8 digits"),
+            maxLength: 8, // Set maximum length to 8 characters
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (code != null &&
+                    code!.length == 8 && // Check for exact length of 8
+                    RegExp(r'^[a-zA-Z0-9]+$').hasMatch(code!)) {
+                  Navigator.of(context).pop(); // Close dialog
+                  encryptFile(
+                      file); // Call encryptFile function with file parameter
+                  showSnackbar(context, "File Encrypted Successfully");
+                } else {
+                  showSnackbar(
+                    context,
+                    "Code must be 8 digits and contain only numbers and letters",
+                  );
+                }
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -300,11 +343,11 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                     return <PopupMenuEntry<String>>[
                                       PopupMenuItem<String>(
                                         value: 'decrypt',
-                                        child: Text("Decrypt"),
+                                        child: Text("Unhide"),
                                       ),
                                       PopupMenuItem<String>(
                                         value: 'encrypt',
-                                        child: Text("Encrypt"),
+                                        child: Text("Hide"),
                                       ),
                                       PopupMenuItem<String>(
                                         value: 'delete',
@@ -316,9 +359,16 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                     if (choice == 'decrypt') {
                                       decryptFile(file!);
                                     } else if (choice == 'encrypt') {
-                                      encryptFile(file!);
-                                      showSnackbar(context,
-                                          "File Encrypted Successfully");
+                                      try {
+                                        await _showCodeInputDialog(
+                                            file!); // Ensure awaiting the dialog
+                                      } catch (error) {
+                                        print(
+                                            "Error showing dialog: $error"); // Handle any errors
+                                      }
+                                      //encryptFile(file!);
+                                      // showSnackbar(context,
+                                      //     "File Encrypted Successfully");
                                     } else if (choice == 'delete') {
                                       if (file != null) {
                                         // Delete the file from the 'safefiles' directory
