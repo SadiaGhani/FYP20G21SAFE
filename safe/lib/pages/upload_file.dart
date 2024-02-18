@@ -6,13 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:safe/pages/azure.dart';
 import 'package:safe/pages/ontap_openfile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadFileScreen extends StatefulWidget {
   const UploadFileScreen({Key? key}) : super(key: key);
 
   @override
   _UploadFileScreenState createState() => _UploadFileScreenState();
+}
+
+Future<void> _saveRecentFiles(List<PlatformFile> files) async {
+  final prefs = await SharedPreferences.getInstance();
+  final List<String> fileNames = files.map((file) => file.name).toList();
+  await prefs.setStringList('recentFiles', fileNames);
 }
 
 class _UploadFileScreenState extends State<UploadFileScreen> {
@@ -50,6 +58,8 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
               final newFile = File(filePath);
               if (file.bytes != null) {
                 newFile.writeAsBytesSync(file.bytes!);
+                print("File saved locally: $fileName");
+                await uploadFileToAzure(newFile, context);
                 print("e1");
                 setState(() {
                   recentFiles.add(PlatformFile(
@@ -58,6 +68,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                     bytes: newFile.readAsBytesSync(),
                   ));
                 });
+                await _saveRecentFiles(recentFiles);
 
                 showSnackbar(context, "Your files uploaded successfully");
               } else {
@@ -122,6 +133,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
           bytes: encryptedBytes,
         ));
       });
+      await _saveRecentFiles(recentFiles);
 
       showSnackbar(context, "File Encrypted Successfully");
     } else {
@@ -167,6 +179,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
             bytes: decryptedBytes,
           ));
         });
+        await _saveRecentFiles(recentFiles);
 
         showSnackbar(context, "File Decrypted Successfully");
       } else {
@@ -181,7 +194,74 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
     return xorEncrypt(data);
   }
 
+  Future<void> _showCodeInputDialog(PlatformFile file) async {
+    String? code;
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Enter Code 8 digits to Hide File"),
+          content: TextField(
+            onChanged: (value) {
+              code = value;
+            },
+            decoration: InputDecoration(hintText: "Enter Code 8 digits"),
+            maxLength: 8, // Set maximum length to 8 characters
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (code != null &&
+                    code!.length == 8 && // Check for exact length of 8
+                    RegExp(r'^[a-zA-Z0-9]+$').hasMatch(code!)) {
+                  Navigator.of(context).pop(); // Close dialog
+                  encryptFile(
+                      file); // Call encryptFile function with file parameter
+                  showSnackbar(context, "File Encrypted Successfully");
+                } else {
+                  showSnackbar(
+                    context,
+                    "Code must be 8 digits and contain only numbers and letters",
+                  );
+                }
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    _loadRecentFiles();
+  }
+
+  Future<void> _loadRecentFiles() async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String>? fileNames = prefs.getStringList('recentFiles');
+    if (fileNames != null) {
+      setState(() {
+        recentFiles = fileNames
+            .map((fileName) => PlatformFile(
+                  name: fileName,
+                  size:
+                      0, // You might need to fetch the size from local storage as well
+                  bytes:
+                      null, // You might need to fetch bytes from local storage as well
+                ))
+            .toList();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +352,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                 Text(
                                   file?.name != null
                                       ? (file!.name.length > 20
-                                          ? '${file?.name!.substring(0, 20)}...'
+                                          ? '${file?.name.substring(0, 20)}...'
                                           : file.name)
                                       : 'No File',
                                   maxLines: 1,
@@ -300,11 +380,11 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                     return <PopupMenuEntry<String>>[
                                       PopupMenuItem<String>(
                                         value: 'decrypt',
-                                        child: Text("Decrypt"),
+                                        child: Text("Unhide"),
                                       ),
                                       PopupMenuItem<String>(
                                         value: 'encrypt',
-                                        child: Text("Encrypt"),
+                                        child: Text("Hide"),
                                       ),
                                       PopupMenuItem<String>(
                                         value: 'delete',
@@ -316,9 +396,16 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                     if (choice == 'decrypt') {
                                       decryptFile(file!);
                                     } else if (choice == 'encrypt') {
-                                      encryptFile(file!);
-                                      showSnackbar(context,
-                                          "File Encrypted Successfully");
+                                      try {
+                                        await _showCodeInputDialog(
+                                            file!); // Ensure awaiting the dialog
+                                      } catch (error) {
+                                        print(
+                                            "Error showing dialog: $error"); // Handle any errors
+                                      }
+                                      //encryptFile(file!);
+                                      // showSnackbar(context,
+                                      //     "File Encrypted Successfully");
                                     } else if (choice == 'delete') {
                                       if (file != null) {
                                         // Delete the file from the 'safefiles' directory
@@ -344,6 +431,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                           recentFiles.remove(file);
                                           showSnackbar(context, "File Deleted");
                                         });
+                                        await _saveRecentFiles(recentFiles);
                                       }
                                     }
                                   },

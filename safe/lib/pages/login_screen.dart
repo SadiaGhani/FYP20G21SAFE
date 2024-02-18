@@ -263,8 +263,6 @@ final LocalAuthentication localAuth = LocalAuthentication();
                             
                             ElevatedButton(
                               onPressed: () {
-                                //Navigator.pushNamed(context, '/menu'); 
-                                
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
                                 String email = emailController.text.trim();  // Ensure trimming white spaces
                                 String password = passwordController.text;
