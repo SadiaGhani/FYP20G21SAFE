@@ -17,7 +17,8 @@ import 'package:safe/pages/threat.dart';
 import 'package:safe/pages/upload_file.dart';
 import 'package:safe/pages/user_profile_screen.dart';
 import 'package:safe/pages/welcome_screen.dart';
-//import 'firebase_options.dart';
+import 'package:safe/pages/BiometricAuthenticationScreen.dart';
+//import 'firebase_options.dart'
 
 void main() async {
   print(" Before initilization ");
@@ -63,6 +64,8 @@ class MyApp extends StatelessWidget {
         '/notifications': (context) => NotificationsPage(),
         '/settings': (context) => SettingsPage(),
         '/threats': (context) => ThreatIntelligencePage(),
+        '/auth':(context)=> BiometricAuthenticationScreen(),
+
       },
     );
   }

@@ -1,11 +1,49 @@
 //import 'dart:js';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
+import 'package:safe/pages/BiometricAuthenticationScreen.dart'; 
 
 class LoginScreen extends StatelessWidget {
  LoginScreen({Key? key});
+final LocalAuthentication localAuth = LocalAuthentication();
+
+  Future<void> _authenticate(BuildContext context) async {
+    bool isAuthenticated = false;
+    try {
+      isAuthenticated = await localAuth.authenticate(
+        biometricOnly: true,
+        useErrorDialogs: true,
+        stickyAuth: true,
+        // On iOS, you can customize the error message using `localizedReason`
+        localizedReason: 'Authenticate with Face', 
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    if (isAuthenticated) {
+      // Authentication successful, navigate to the next screen
+      Navigator.pushReplacementNamed(context, '/menu');
+    } else {
+      // Authentication failed, stay on the authentication screen or show an error message
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Authentication Failed'),
+          content: Text('Face authentication failed. Please try again.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   
  final TextEditingController emailController = TextEditingController();
@@ -20,7 +58,9 @@ class LoginScreen extends StatelessWidget {
     );
     // The user is now signed in
     print('User logged in: ${credential.user?.email}');
-    Navigator.pushNamed(context, '/menu');
+
+    // Navigator.pushNamed(context, '/auth');
+    _authenticate(context);
     
   } on FirebaseAuthException catch (e) {
     if (e.code == 'invalid-email') {
@@ -224,6 +264,7 @@ class LoginScreen extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 //Navigator.pushNamed(context, '/menu'); 
+                                
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
                                 String email = emailController.text.trim();  // Ensure trimming white spaces
                                 String password = passwordController.text;

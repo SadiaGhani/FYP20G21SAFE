@@ -10,41 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SignupScreen extends StatelessWidget {
-  
-
-// Future<void> signIn(context) async {
-//   print("I am in the function");
-//   final user = await GoogleSignInApi.login();
-//   print(user);
-
-//   if (user == null) {
-//     print("Error");
-//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
-//   } else {
-//     print("Success");
-
-//     String name = user.displayName ?? "N/A";
-//     String email = user.email ?? "N/A";
-//     String picture = user.photoUrl ?? "N/A";
-
-//     // Show UserProfileScreen
-//     Navigator.pushReplacement(
-//       context,
-//       MaterialPageRoute(
-//         builder: (context) => UserProfileScreen(
-//           name: name,
-//           email: email,
-//           picture: picture,
-//         ),
-//       ),
-//     );
-
-//     // Delay for 3 seconds
-//     print("i am delayingggggggggggggggggggggggggggggggggggggggggggggg");
-//     await Future.delayed(Duration(seconds: 1));   
-//     Navigator.pushNamed(context, '/menu');
-//   }
-// }
 
 Future<void> signIn(BuildContext context) async {
   print("I am in the function");
@@ -79,31 +44,6 @@ Future<void> signIn(BuildContext context) async {
     Navigator.pushNamed(context, '/menu');
   }
 }
-
-  // print("Google Login functioneeeeeeeee)eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-  // GoogleSignIn _googleSignIn = GoogleSignIn(
-  //   serverClientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
-    
-  // );
-
-  // try {
-  //   var result = await _googleSignIn.signIn();
-
-  //   if (result != null) {
-  //     // navigator();
-  //     print(" i am in trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-  //     print(result);
-  //     return true;
-  //   } else {
-  //     // User canceled the Google sign-in
-  //     return false;
-  //   }
-  // } catch (error, stackTrace) {
-  // print(" i am in errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-  // print('Error signing in: $error');
-  // print('Stack trace: $stackTrace');
-  // return false;
-  // }
 
 
 
@@ -584,6 +524,31 @@ class RoundedIconButton extends StatelessWidget {
 //                 height: 100,
 //               ),
 //             ),
+  // print("Google Login functioneeeeeeeee)eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  // GoogleSignIn _googleSignIn = GoogleSignIn(
+  //   serverClientId: '36466737574-dut5h5ale50o89sn861i1hrpkcklk0bk.apps.googleusercontent.com',
+    
+  // );
+
+  // try {
+  //   var result = await _googleSignIn.signIn();
+
+  //   if (result != null) {
+  //     // navigator();
+  //     print(" i am in trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  //     print(result);
+  //     return true;
+  //   } else {
+  //     // User canceled the Google sign-in
+  //     return false;
+  //   }
+  // } catch (error, stackTrace) {
+  // print(" i am in errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+  // print('Error signing in: $error');
+  // print('Stack trace: $stackTrace');
+  // return false;
+  // }
+
 
 //             Column(
 //               mainAxisAlignment: MainAxisAlignment.center, // Center vertically
@@ -826,5 +791,45 @@ class RoundedIconButton extends StatelessWidget {
 //         ),
 //       ),
 //     );
+//   }
+// }
+
+
+
+
+
+  
+
+// Future<void> signIn(context) async {
+//   print("I am in the function");
+//   final user = await GoogleSignInApi.login();
+//   print(user);
+
+//   if (user == null) {
+//     print("Error");
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign Up failed")));
+//   } else {
+//     print("Success");
+
+//     String name = user.displayName ?? "N/A";
+//     String email = user.email ?? "N/A";
+//     String picture = user.photoUrl ?? "N/A";
+
+//     // Show UserProfileScreen
+//     Navigator.pushReplacement(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => UserProfileScreen(
+//           name: name,
+//           email: email,
+//           picture: picture,
+//         ),
+//       ),
+//     );
+
+//     // Delay for 3 seconds
+//     print("i am delayingggggggggggggggggggggggggggggggggggggggggggggg");
+//     await Future.delayed(Duration(seconds: 1));   
+//     Navigator.pushNamed(context, '/menu');
 //   }
 // }
