@@ -12,7 +12,7 @@ class BiometricAuthenticationScreen extends StatelessWidget {
         useErrorDialogs: true,
         stickyAuth: true,
         // On iOS, you can customize the error message using `localizedReason`
-        localizedReason: 'Authenticate with Face', 
+        localizedReason: '',
       );
     } catch (e) {
       print('Error: $e');
@@ -27,7 +27,7 @@ class BiometricAuthenticationScreen extends StatelessWidget {
         context: context,
         builder: (context) => AlertDialog(
           title: Text('Authentication Failed'),
-          content: Text('Face authentication failed. Please try again.'),
+          content: Text('Authentication failed. Please try again.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -48,7 +48,7 @@ class BiometricAuthenticationScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () => _authenticate(context),
-          child: Text('Authenticate with Face'),
+          child: Text(''),
         ),
       ),
     );

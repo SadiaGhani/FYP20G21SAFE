@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
-import 'package:safe/pages/BiometricAuthenticationScreen.dart'; 
+import 'package:safe/pages/BiometricAuthenticationScreen.dart';
+
 Future<void> forgotPassword(BuildContext context) async {
   final emailController = TextEditingController();
 
@@ -28,12 +29,15 @@ Future<void> forgotPassword(BuildContext context) async {
             child: Text('Submit'),
             onPressed: () async {
               try {
-                await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password reset email sent')));
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: emailController.text);
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password reset email sent')));
                 Navigator.of(context).pop();
                 print("Email send Successfulyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
               } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
               }
             },
           ),
@@ -42,9 +46,10 @@ Future<void> forgotPassword(BuildContext context) async {
     },
   );
 }
+
 class LoginScreen extends StatelessWidget {
- LoginScreen({Key? key});
-final LocalAuthentication localAuth = LocalAuthentication();
+  LoginScreen({Key? key});
+  final LocalAuthentication localAuth = LocalAuthentication();
 
   Future<void> _authenticate(BuildContext context) async {
     bool isAuthenticated = false;
@@ -54,7 +59,7 @@ final LocalAuthentication localAuth = LocalAuthentication();
         useErrorDialogs: true,
         stickyAuth: true,
         // On iOS, you can customize the error message using `localizedReason`
-        localizedReason: 'Authenticate with Face', 
+        localizedReason: 'Authenticate with Face',
       );
     } catch (e) {
       print('Error: $e');
@@ -81,50 +86,47 @@ final LocalAuthentication localAuth = LocalAuthentication();
     }
   }
 
-  
- final TextEditingController emailController = TextEditingController();
- final TextEditingController passwordController = TextEditingController();
- Future<void> signInWithEmailAndPassword(context,String email, String password) async {
- // print("i am in function of sign innnnnnnnnnnnnnnnnnnn");
-  try {
-   // print("i am in truyyyyyyyyyyyyyyyyyyyyyyyy");
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    // The user is now signed in
-    print('User logged in: ${credential.user?.email}');
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  Future<void> signInWithEmailAndPassword(
+      context, String email, String password) async {
+    // print("i am in function of sign innnnnnnnnnnnnnnnnnnn");
+    try {
+      // print("i am in truyyyyyyyyyyyyyyyyyyyyyyyy");
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // The user is now signed in
+      print('User logged in: ${credential.user?.email}');
 
-    // Navigator.pushNamed(context, '/auth');
-    _authenticate(context);
-    
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'invalid-email') {
-      print('invalid-email');
-      String title = "Invalid-email";
-      String message = "Your Provided Email is incorrect or does not exist";
-      _showErrorDialog(context,title,message);
-    } else if (e.code == 'invalid-credential') {
-      print('Wrong password provided for that user.');
-      String title = "Invalid-credential";
-      String message = "Wrong Credentials provided for that user";
-      _showErrorDialog(context,title,message);
+      // Navigator.pushNamed(context, '/auth');
+      _authenticate(context);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        print('invalid-email');
+        String title = "Invalid-email";
+        String message = "Your Provided Email is incorrect or does not exist";
+        _showErrorDialog(context, title, message);
+      } else if (e.code == 'invalid-credential') {
+        print('Wrong password provided for that user.');
+        String title = "Invalid-credential";
+        String message = "Wrong Credentials provided for that user";
+        _showErrorDialog(context, title, message);
       } else {
-      print('Error signing in: ${e.code}');
-      String title = "Error signing in";
-      String message = "Error Ocurred while signing in";
-      _showErrorDialog(context,title,message);
+        print('Error signing in: ${e.code}');
+        String title = "Error signing in";
+        String message = "Error Ocurred while signing in";
+        _showErrorDialog(context, title, message);
       }
       if (email.isEmpty && password.isEmpty) {
-                                print("Email or password is empty");
-                                String title = "Email and Password is Missing";
-                                String message = "Email and password feilds are empty"; 
-                                _showErrorDialog(context,title,message);
-                                }
+        print("Email or password is empty");
+        String title = "Email and Password is Missing";
+        String message = "Email and password feilds are empty";
+        _showErrorDialog(context, title, message);
+      }
+    }
   }
-}
-
-   
 
   void _showErrorDialog(BuildContext context, String title, String message) {
     showDialog(
@@ -137,7 +139,7 @@ final LocalAuthentication localAuth = LocalAuthentication();
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
-                //Navigator.pushNamed(context, '/menu'); 
+                //Navigator.pushNamed(context, '/menu');
               },
               child: Text('OK'),
             ),
@@ -147,9 +149,7 @@ final LocalAuthentication localAuth = LocalAuthentication();
     );
   }
 
-  
   @override
-  
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -256,9 +256,9 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
-                                        controller: emailController, 
+                                        controller: emailController,
                                         decoration: InputDecoration(
-                                          hintText: 'Email', 
+                                          hintText: 'Email',
                                           border: InputBorder.none,
                                         ),
                                       ),
@@ -283,7 +283,8 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
-                                        controller: passwordController, // Assign the controller
+                                        controller:
+                                            passwordController, // Assign the controller
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           hintText: 'Password',
@@ -299,7 +300,6 @@ final LocalAuthentication localAuth = LocalAuthentication();
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                
                                 GestureDetector(
                                   onTap: () {
                                     forgotPassword(context);
@@ -309,7 +309,8 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 247, 249, 250), // Customize the text color
+                                      color: Color.fromARGB(255, 247, 249,
+                                          250), // Customize the text color
                                     ),
                                   ),
                                 ),
@@ -319,14 +320,15 @@ final LocalAuthentication localAuth = LocalAuthentication();
                             ElevatedButton(
                               onPressed: () {
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
-                                String email = emailController.text.trim();  // Ensure trimming white spaces
+                                String email = emailController.text
+                                    .trim(); // Ensure trimming white spaces
                                 String password = passwordController.text;
                                 print("what is going");
                                 print(email);
                                 print(password);
-                                
-                                signInWithEmailAndPassword(context,email,password);
-                               
+
+                                signInWithEmailAndPassword(
+                                    context, email, password);
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: const Color(
@@ -343,7 +345,8 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                   alignment: Alignment.center,
                                   child: Text(
                                     "Log In",
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(
+                                        fontSize: 18, color: Color(0xFFFFFFFF)),
                                   ),
                                 ),
                               ),
@@ -365,7 +368,7 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                     Navigator.pushNamed(context, '/signup');
                                   },
                                   child: const Text(
-                                    "Signup",
+                                    "Sign Up",
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,

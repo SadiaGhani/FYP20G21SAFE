@@ -77,7 +77,8 @@ class WelcomeScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "Sign In",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(
+                                fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
                       ),
@@ -102,7 +103,8 @@ class WelcomeScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "Sign Up",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(
+                                fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
                       ),
