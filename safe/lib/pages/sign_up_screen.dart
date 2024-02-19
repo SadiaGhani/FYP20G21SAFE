@@ -3,6 +3,7 @@ import 'package:safe/pages/user_profile_screen.dart';
 import 'package:safe/pages/menu_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
@@ -10,6 +11,46 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SignupScreen extends StatelessWidget {
+
+final LocalAuthentication localAuth = LocalAuthentication();
+
+  Future<void> _authenticate(BuildContext context) async {
+    bool isAuthenticated = false;
+    try {
+      isAuthenticated = await localAuth.authenticate(
+        biometricOnly: true,
+        useErrorDialogs: true,
+        stickyAuth: true,
+        // On iOS, you can customize the error message using `localizedReason`
+        localizedReason: 'Authenticate with Face', 
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    if (isAuthenticated) {
+      // Authentication successful, navigate to the next screen
+      Navigator.pushReplacementNamed(context, '/menu');
+    } else {
+      // Authentication failed, stay on the authentication screen or show an error message
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Authentication Failed'),
+          content: Text('Face authentication failed. Please try again.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+
+
 
 Future<void> signIn(BuildContext context) async {
   print("I am in the function");
@@ -90,6 +131,7 @@ void signUpWithEmailAndPassword(String email, String password, BuildContext cont
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
+                
                 Navigator.pushNamed(context, '/menu');
               },
               child: Text('Agree'),
@@ -176,239 +218,162 @@ void signUpWithEmailAndPassword(String email, String password, BuildContext cont
 
 
 @override
-  Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+ 
+Widget build(BuildContext context) {
+  final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: const Color(0XFFEEE9DA), // Background color
-      body: Center(
-        // Center the entire content
-        child: Stack(
-          children: <Widget>[
-            // Image in top-left corner
-            Positioned(
-              left: -15,
-              top: 0,
-              child: Image.asset(
-                'assets/upr_corner.png',
-                width: 100,
-                height: 100,
-              ),
-            ),
-            Positioned(
-              right: -15,
-              top: -30,
-              child: Image.asset(
-                'assets/safe_logo.png',
-                width: 150,
-                height: 150,
-              ),
-            ),
-            Positioned(
-              right: -15,
-              bottom: 0,
-              child: Image.asset(
-                'assets/btm_corner.png',
-                width: 100,
-                height: 100,
-              ),
-            ),
-
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Center horizontally
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // Center horizontally
+  return Scaffold(
+    backgroundColor: const Color(0XFFEEE9DA), // Background color
+    body: Stack(
+      children: <Widget>[
+        // Upper-left corner image
+        Positioned(
+          left: 0,
+          top: 0,
+          child: Image.asset(
+            'assets/upr_corner.png',
+            width: 100,
+            height: 100,
+          ),
+        ),
+        // Top-center logo
+        Positioned(
+          top: 0,
+          left: screenSize.width / 2 - 75, // Adjust the left position to center the logo
+          child: Image.asset(
+            'assets/safe_logo.png',
+            width: 150,
+            height: 150,
+          ),
+        ),
+        // Bottom-right corner image
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: Image.asset(
+            'assets/btm_corner.png',
+            width: 100,
+            height: 100,
+          ),
+        ),
+        SingleChildScrollView( // Wrap main content with SingleChildScrollView
+          child: Center(
+            // Center the entire content vertically and horizontally
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Image.asset(
+                      'assets/signup.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextFieldWithIcon(Icons.account_circle, 'Name', nameController),
+                  const SizedBox(height: 10),
+                  TextFieldWithIcon(Icons.phone, 'Phone Number', phoneNumberController),
+                  const SizedBox(height: 10),
+                  TextFieldWithIcon(FontAwesomeIcons.addressBook, 'Address', addressController),
+                  const SizedBox(height: 10),
+                  TextFieldWithIcon(Icons.email, 'Email', emailController),
+                  const SizedBox(height: 10),
+                  TextFieldWithIcon(Icons.lock, 'Password', passwordController, obscureText: true),
+                  const SizedBox(height: 10),
+                  TextFieldWithIcon(Icons.lock, 'Confirm Password', confirmPasswordController, obscureText: true),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle sign-up button press
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color(0XFF6096B4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: screenSize.width * 0.8,
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       const Text(
-                        'Sign Up',
+                        "Already have an account? ",
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 0, 0, 0), // Text color
+                          fontSize: 16,
+                          color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Center(
-                        child: Image.asset(
-                          'assets/signup.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                      ),
-                      
-                      TextFieldWithIcon(Icons.account_circle, 'Name', nameController),
-                      const SizedBox(height: 10),
-                      TextFieldWithIcon(Icons.phone, 'Phone Number', phoneNumberController),
-                      const SizedBox(height: 10),
-                      TextFieldWithIcon(FontAwesomeIcons.addressBook, 'Address', addressController),
-                      const SizedBox(height: 10),
-                      TextFieldWithIcon(Icons.email, 'Email', emailController),
-                      const SizedBox(height: 10),
-                      TextFieldWithIcon(Icons.lock, 'Password', passwordController, obscureText: true),
-                      const SizedBox(height: 10),
-                      TextFieldWithIcon(Icons.lock, 'Confirm Password', confirmPasswordController, obscureText: true),
-
-                      ElevatedButton(
-                        
-                        onPressed: () {
-                          String name = nameController.text;
-                          String phoneNumber = phoneNumberController.text;
-                          String address = addressController.text;
-                          String email = emailController.text;
-                          String password = passwordController.text;
-                          String confirmPassword = confirmPasswordController.text;
-                          
-                          if (name.isEmpty || phoneNumber.isEmpty || address.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-                            String title = "All Feilds are required";
-                            String msg = "Please fill out all the asked information";
-                            showAlertDialog(context,title,msg);
-                            } else if (!isValidName(name)) {
-                            String title = "Invalid Name";
-                            String msg = "Your name should contains only alphabets";
-                            showAlertDialog(context,title,msg);
-                            }
-                            else if (!isValidEmail(email)) {
-                            String title = "Invalid Email";
-                            String msg = "Please enter a Valid Email Address";
-                            showAlertDialog(context,title,msg);
-                            }  
-                            else if (!isValidPhoneNumber(phoneNumber)) {
-                            String title = "Invalid Phone Number";
-                            String msg = "Please Enter the Valid phone Number of 11 digits";
-                            showAlertDialog(context,title,msg);
-                            } else if (!isValidPassword(password)) {
-                            String title = "Password Error";
-                            String msg = "You Password should be at least6 character long and contains atleast 1 Special Character";
-                            showAlertDialog(context,title,msg);
-                            } 
-                            else if (password != confirmPassword) {
-                            String title = "Password Mismatch error";
-                            String msg = "Your Password and Confirm Password did not Match";
-                            showAlertDialog(context,title,msg);
-                            } 
-                            else {
-                            // All data is valid, proceed with sign-up
-                            signUpWithEmailAndPassword(email, password, context);
-                            }
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to the login page
+                          Navigator.pushNamed(context, '/login');
                         },
-                          
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              const Color(0XFF6096B4), // Change button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // No border radius
-                          ),
-                        ),
-                        child: SizedBox(
-                          width: screenSize.width *
-                              0.8, // Adjust button width based on screen width
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(fontSize: 18),
-                            ),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Text(
-                            "Already have an account? ",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // Navigate to the login page
-                              Navigator.pushNamed(context, '/login');
-                            },
-                            child: const Text(
-                              "Sign In",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          print("I am in Google button");
-
-                          signIn(context);
-
-                        //   if (loginSuccess) {
-                        //   // Navigate to "Sign In" page only if Google login was successful
-                        //   Navigator.pushNamed(context, '/menu');
-                        //  }
-                        },
-                          
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              const Color(0XFF6096B4), // Change button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // No border radius
-                          ),
-                        ),
-                        child: SizedBox(
-                          width: screenSize.width *
-                              0.8, // Adjust button width based on screen width
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Sign Up With Google",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // const SizedBox(height: 20),
-                      // const Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: <Widget>[
-                      //     RoundedIconButton(
-                      //       Icons.facebook,
-                      //       const Color(0XFF6096B4),
-                      //     ),
-                      //     SizedBox(width: 20),
-                      //     RoundedIconButton(
-                      //       FontAwesomeIcons.google,
-                      //       const Color(0XFF6096B4),
-                            
-                      //     ),
-                      //     SizedBox(width: 20),
-                      //     RoundedIconButton(
-                      //       FontAwesomeIcons.twitter,
-                      //       const Color(0XFF6096B4),
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle sign-up with Google button press
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color(0XFF6096B4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: screenSize.width * 0.8,
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Sign Up With Google",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
 }
+},
 
 class TextFieldWithIcon extends StatelessWidget {
   final IconData icon;
