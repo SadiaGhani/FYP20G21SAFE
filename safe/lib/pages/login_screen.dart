@@ -5,7 +5,43 @@ import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:safe/pages/BiometricAuthenticationScreen.dart'; 
+Future<void> forgotPassword(BuildContext context) async {
+  final emailController = TextEditingController();
 
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Forgot Password'),
+        content: TextField(
+          controller: emailController,
+          decoration: InputDecoration(labelText: 'Email'),
+        ),
+        actions: [
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Submit'),
+            onPressed: () async {
+              try {
+                await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password reset email sent')));
+                Navigator.of(context).pop();
+                print("Email send Successfulyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 class LoginScreen extends StatelessWidget {
  LoginScreen({Key? key});
 final LocalAuthentication localAuth = LocalAuthentication();
@@ -259,8 +295,27 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 30),
-                            
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                
+                                GestureDetector(
+                                  onTap: () {
+                                    forgotPassword(context);
+                                  },
+                                  child: const Text(
+                                    "Forget Passowrd?",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 247, 249, 250), // Customize the text color
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
                             ElevatedButton(
                               onPressed: () {
                                 print("i am in login in butonnnnnnnnnnnnnnnn");
@@ -312,7 +367,7 @@ final LocalAuthentication localAuth = LocalAuthentication();
                                   child: const Text(
                                     "Signup",
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromARGB(255, 0, 0,
                                           0), // Customize the text color
