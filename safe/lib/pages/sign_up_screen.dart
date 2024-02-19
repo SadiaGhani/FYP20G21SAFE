@@ -227,35 +227,35 @@ Widget build(BuildContext context) {
     body: Stack(
       children: <Widget>[
         // Upper-left corner image
-        Positioned(
-          left: 0,
-          top: 0,
-          child: Image.asset(
-            'assets/upr_corner.png',
-            width: 100,
-            height: 100,
-          ),
-        ),
-        // Top-center logo
-        Positioned(
-          top: 0,
-          left: screenSize.width / 2 - 75, // Adjust the left position to center the logo
-          child: Image.asset(
-            'assets/safe_logo.png',
-            width: 150,
-            height: 150,
-          ),
-        ),
-        // Bottom-right corner image
-        Positioned(
-          right: 0,
-          bottom: 0,
-          child: Image.asset(
-            'assets/btm_corner.png',
-            width: 100,
-            height: 100,
-          ),
-        ),
+        // Positioned(
+        //   left: 0,
+        //   top: 0,
+        //   child: Image.asset(
+        //     'assets/upr_corner.png',
+        //     width: 100,
+        //     height: 100,
+        //   ),
+        // ),
+        // // Top-center logo
+        // Positioned(
+        //   top: 0,
+        //   left: screenSize.width / 2 - 75, // Adjust the left position to center the logo
+        //   child: Image.asset(
+        //     'assets/safe_logo.png',
+        //     width: 150,
+        //     height: 150,
+        //   ),
+        // ),
+        // // Bottom-right corner image
+        // Positioned(
+        //   right: 0,
+        //   bottom: 0,
+        //   child: Image.asset(
+        //     'assets/btm_corner.png',
+        //     width: 100,
+        //     height: 100,
+        //   ),
+        // ),
         SingleChildScrollView( // Wrap main content with SingleChildScrollView
           child: Center(
             // Center the entire content vertically and horizontally
@@ -265,14 +265,14 @@ Widget build(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
+                  // const Text(
+                  //   'Sign Up',
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Color.fromARGB(255, 0, 0, 0),
+                  //   ),
+                  // ),
                   const SizedBox(height: 20),
                   Center(
                     child: Image.asset(
@@ -373,7 +373,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
-},
+}
 
 class TextFieldWithIcon extends StatelessWidget {
   final IconData icon;
