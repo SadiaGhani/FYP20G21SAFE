@@ -322,7 +322,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                     _selectFile();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: const Color(0XFF6096B4),
+                    backgroundColor: const Color(0XFF6096B4),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),

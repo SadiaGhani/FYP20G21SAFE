@@ -331,7 +331,7 @@ class LoginScreen extends StatelessWidget {
                                     context, email, password);
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: const Color(
+                                backgroundColor: const Color(
                                     0XFF6096B4), // Change button color
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(

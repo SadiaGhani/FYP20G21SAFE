@@ -64,7 +64,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.pushNamed(context, '/login');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0XFF6096B4), // Change button color
+                        backgroundColor: const Color(0XFF6096B4), // Change button color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(20), // No border radius
@@ -90,7 +90,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.pushNamed(context, '/signup');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0XFF6096B4), // Change button color
+                        backgroundColor: const Color(0XFF6096B4), // Change button color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(20), // No border radius
