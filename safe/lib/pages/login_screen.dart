@@ -6,46 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:safe/pages/main_menu/menu_screen.dart';
 import 'package:safe/pages/BiometricAuthenticationScreen.dart';
 
-Future<void> forgotPassword(BuildContext context) async {
-  final emailController = TextEditingController();
 
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text('Forgot Password'),
-        content: TextField(
-          controller: emailController,
-          decoration: InputDecoration(labelText: 'Email'),
-        ),
-        actions: [
-          TextButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: Text('Submit'),
-            onPressed: () async {
-              try {
-                await FirebaseAuth.instance
-                    .sendPasswordResetEmail(email: emailController.text);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Password reset email sent')));
-                Navigator.of(context).pop();
-                print("Email send Successfulyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key});
@@ -127,6 +88,50 @@ class LoginScreen extends StatelessWidget {
       }
     }
   }
+  Future<void> forgotPassword(BuildContext context) async {
+  final emailController = TextEditingController();
+
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Forgot Password'),
+        content: TextField(
+          controller: emailController,
+          decoration: InputDecoration(labelText: 'Email'),
+        ),
+        actions: [
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Submit'),
+            onPressed: () async {
+              try {
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: emailController.text);
+                   ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password reset email sent')));
+                  
+                Navigator.of(context).pop();
+                print("Email send Successfulyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                  String title = "Email Sent!";
+                    String message = "Password reset email sent. Plaese check your inbox or spam folder.";
+                   _showErrorDialog(context, title, message);
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   void _showErrorDialog(BuildContext context, String title, String message) {
     showDialog(
@@ -303,6 +308,7 @@ class LoginScreen extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     forgotPassword(context);
+
                                   },
                                   child: const Text(
                                     "Forget Passowrd?",
