@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
+
+import 'dart:io';
+
+
+String url = Platform.isAndroid ? 'http://192.168.100.233:3000' : 'http://localhost:3000';
 class FakeShutdownScreen extends StatefulWidget {
   const FakeShutdownScreen({Key? key}) : super(key: key);
 
@@ -10,6 +16,40 @@ class FakeShutdownScreen extends StatefulWidget {
 class _FakeShutdownScreenState extends State<FakeShutdownScreen> {
   bool isToggled = false;
 
+ Future<void> _callNodeJsServerApi() async {
+    try {
+      print('${url}/api/fake-shutdown');
+      // Replace 'YOUR_NODEJS_SERVER_API_URL' with the actual API URL
+      final response = await http.get(Uri.parse('${url}/api/fake-shutdown'));
+     
+      // Handle the response here
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        // Show a prompt if the response is received
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Connection Established'),
+            content: Text('The connection to the Node.js server is established.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        // Handle other status codes if needed
+        print('Failed to connect to the Node.js server: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle errors
+      print('Error calling Node.js server API: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +101,16 @@ class _FakeShutdownScreenState extends State<FakeShutdownScreen> {
                       setState(() {
                         isToggled = value;
                       });
+                        if (isToggled) {
+                        _callNodeJsServerApi();
+                      }
                     },
                     activeColor: const Color(0XFF6096B4),
                   ),
                   
                   // Subheading when Toggle is On
                   if (isToggled)
+                     
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: const Text(
@@ -77,6 +121,7 @@ class _FakeShutdownScreenState extends State<FakeShutdownScreen> {
                         ),
                       ),
                     ),
+                      
                   
                   // Image
                   Padding(

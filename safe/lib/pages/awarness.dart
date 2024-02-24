@@ -58,8 +58,7 @@ class AwarenessPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => _launchURL('https://thehackernews.com/'),
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0XFF6096B4),
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white, backgroundColor: const Color(0XFF6096B4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -102,8 +101,7 @@ class AwarenessPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => _launchURL('https://youtu.be/inWWhr5tnEA?si=ydjKqAv_J6k-b7nL'),
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0XFF6096B4),
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white, backgroundColor: const Color(0XFF6096B4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
