@@ -74,7 +74,12 @@ android {
         }
     }
 }
-
+android {
+    defaultConfig {
+        minSdkVersion 21
+        // Other configurations...
+    }
+}
 flutter {
     source '../..'
 }

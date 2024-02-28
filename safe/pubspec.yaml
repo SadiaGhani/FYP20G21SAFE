@@ -54,7 +54,8 @@ dependencies:
   http: ^0.13.3
   path: ^1.8.0
   azblob: ^2.4.0
-
+  camera: ^0.10.5+9
+  firebase_storage: ^11.6.0
   
 
 
@@ -67,8 +68,9 @@ dependencies:
   geolocator: ^7.6.3
   charts_flutter: ^0.12.0
   mime: ^1.0.5
-  web_socket_channel: ^2.4.4
-
+  web_socket_channel: ^2.4.3
+  
+  
   #pointycastle: ^2.0.0
   
   

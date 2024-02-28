@@ -201,12 +201,13 @@ class AppDrawer extends StatelessWidget {
                 color: Colors.black,
               ),
               title: const Text(
-                'Security',
+                'Intruder Alert',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
               onTap: () {
+                Navigator.pushNamed(context, '/intruder_alert');
                 // Handle about option
               },
             ),

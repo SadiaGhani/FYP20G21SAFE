@@ -200,7 +200,7 @@ class MenuPage extends StatelessWidget {
                                 ),
                               ),
                               const Text(
-                                'Intruder Alert',
+                                'Threat Analysis',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
