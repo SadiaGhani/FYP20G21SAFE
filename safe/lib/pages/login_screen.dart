@@ -104,6 +104,50 @@ Future<void> saveCapturedImagePath(String path) async {
       _showErrorDialog(context, 'Error signing in', 'Error occurred while signing in: ${e.code}');
     }
   }
+  Future<void> forgotPassword(BuildContext context) async {
+  final emailController = TextEditingController();
+
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Forgot Password'),
+        content: TextField(
+          controller: emailController,
+          decoration: InputDecoration(labelText: 'Email'),
+        ),
+        actions: [
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Submit'),
+            onPressed: () async {
+              try {
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: emailController.text);
+                   ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password reset email sent')));
+                  
+                Navigator.of(context).pop();
+                print("Email send Successfulyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                  String title = "Email Sent!";
+                    String message = "Password reset email sent. Plaese check your inbox or spam folder.";
+                   _showErrorDialog(context, title, message);
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Errorrrrrrrrrrrrr: $e')));
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   void _showErrorDialog(BuildContext context, String title, String message) {
     showDialog(
@@ -270,9 +314,69 @@ Future<void> saveCapturedImagePath(String path) async {
                               "Do not have an account? ",
                               style: TextStyle(fontSize: 12, color: Colors.white),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/signup');
+                            const SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(184, 184, 210,
+                                    216), // Light blue background
+                                borderRadius: BorderRadius.circular(
+                                    10), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.lock),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextField(
+                                        controller:
+                                            passwordController, // Assign the controller
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          hintText: 'Password',
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    forgotPassword(context);
+
+                                  },
+                                  child: const Text(
+                                    "Forget Passowrd?",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 247, 249,
+                                          250), // Customize the text color
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                print("i am in login in butonnnnnnnnnnnnnnnn");
+                                String email = emailController.text
+                                    .trim(); // Ensure trimming white spaces
+                                String password = passwordController.text;
+                                print("what is going");
+                                print(email);
+                                print(password);
+
+                                signInWithEmailAndPassword(
+                                    context, email, password);
                               },
                               child: const Text(
                                 "Sign Up",
