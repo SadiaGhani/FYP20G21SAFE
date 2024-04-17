@@ -224,6 +224,38 @@ class _LoginScreenState extends State<LoginScreen> {
           'Error occurred while signing in: ${e.code}');
     }
   }
+Future<void> _sendImageToBackend(String imagePath) async {
+  try {
+    // Read image file as bytes
+    File imageFile = File(imagePath);
+    List<int> imageBytes = await imageFile.readAsBytes();
+
+    // Prepare the request body
+    Map<String, dynamic> requestData = {
+      'imageData': base64Encode(imageBytes),
+    };
+
+    // Set up the HTTP request
+    var headers = {
+      'Content-Type': 'application/json',
+      'X-Api-Key': '{{apiKey}}',
+    };
+    var response = await http.post(
+      Uri.parse('http://192.168.0.109:5000/upload-intruder'),
+      headers: headers,
+      body: jsonEncode(requestData),
+    );
+
+    // Check the response status
+    if (response.statusCode == 200) {
+      print('Image uploaded successfully');
+    } else {
+      print('Failed to upload image: ${response.reasonPhrase}');
+    }
+  } catch (e) {
+    print('Error uploading image: $e');
+  }
+}
 
   Future<void> _sendLocationToBackend() async {
     try {
@@ -368,6 +400,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+
   Future<void> _captureAndDisplayImage(
       BuildContext context, String userEmail) async {
     print('image taking');
@@ -392,6 +425,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await controller.initialize();
       final XFile imageFile = await controller.takePicture();
       await saveCapturedImagePath(imageFile.path);
+      await _sendImageToBackend(imageFile.path);
     } catch (e) {
       print('Error capturing image: $e');
     } finally {
