@@ -241,7 +241,7 @@ Future<void> _sendImageToBackend(String imagePath) async {
       'X-Api-Key': '{{apiKey}}',
     };
     var response = await http.post(
-      Uri.parse('http://192.168.0.109:5000/upload-intruder'),
+      Uri.parse('http://10.5.104.14:5000/upload-intruder'),
       headers: headers,
       body: jsonEncode(requestData),
     );
@@ -272,7 +272,7 @@ Future<void> _sendImageToBackend(String imagePath) async {
           'X-Api-Key': '{{apiKey}}'
         };
         var request =
-            http.Request('POST', Uri.parse('http://192.168.0.109:5000/location'));
+            http.Request('POST', Uri.parse('http://10.5.104.14:5000/location'));
         request.body = json.encode(locationData);
         request.headers.addAll(headers);
 
