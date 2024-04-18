@@ -8,9 +8,35 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 import 'package:safe/pages/google_signin_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 class SignupScreen extends StatelessWidget {
   final LocalAuthentication localAuth = LocalAuthentication();
+
+  Future<void> postData(String name,String phone,String address,String email,String password) async {
+    print("I am in posting data functionnnnnnnnnnnnnnnnnnnnn");
+    final url = Uri.parse('http://10.5.136.85:3000/postData'); 
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'full_name': name,
+        'phone_number': phone,
+        'address': address,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data posted successfullyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+    } else {
+      print('Failed to post dataooooooooooooooooooooooooooooooooo: ${response.statusCode}');
+    }
+  }
+
 
   Future<void> _authenticate(BuildContext context) async {
     bool isAuthenticated = false;
@@ -299,7 +325,7 @@ class SignupScreen extends StatelessWidget {
                           String email = emailController.text;
                           String password = passwordController.text;
                           String confirmPassword = confirmPasswordController.text;
-                          
+                          postData(name,phoneNumber,address,email,password);
                           if (name.isEmpty || phoneNumber.isEmpty || address.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
                             String title = "All Feilds are required";
                             String msg = "Please fill out all the asked information";
@@ -330,6 +356,7 @@ class SignupScreen extends StatelessWidget {
                             } 
                             else {
                             // All data is valid, proceed with sign-up
+                            
                             signUpWithEmailAndPassword(email, password, context);
                             }
                         },
