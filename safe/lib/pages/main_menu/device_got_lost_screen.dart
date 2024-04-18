@@ -10,7 +10,7 @@ class DeviceGotLostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 3,
       child: Scaffold(
         backgroundColor: const Color(0XFFEEE9DA),
         body: SingleChildScrollView(
@@ -47,8 +47,8 @@ class DeviceGotLostScreen extends StatelessWidget {
                       indicatorColor: const Color(0XFFEEE9DA),
                       isScrollable: true, // Make tabs scrollable
                       tabs: <Widget>[
-                        buildTab(context, 'Data Wipe'),
-                        buildTab(context, 'Data Access'),
+                      
+                       
                         buildTab(context, 'Location'),
                         buildTab(context, 'Alarms'),
                         buildTab(context, 'Shutdown'),
@@ -59,8 +59,7 @@ class DeviceGotLostScreen extends StatelessWidget {
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
-                          RemoteWipeScreen(),
-                          buildTabContent('Remote Access'),
+                          // RemoteWipeScreen(),
                           LocationTrackingPage(),
                           AlarmsPage(),
                           FakeShutdownScreen(),
