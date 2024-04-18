@@ -17,7 +17,7 @@ class SignupScreen extends StatelessWidget {
 
   Future<void> postData(String name,String phone,String address,String email,String password) async {
     print("I am in posting data functionnnnnnnnnnnnnnnnnnnnn");
-    final url = Uri.parse('http://10.5.136.85:3000/postData'); 
+    final url = Uri.parse('http://10.5.116.26:3000/postData'); 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -206,18 +206,46 @@ class SignupScreen extends StatelessWidget {
   }
 
   bool isValidPhoneNumber(String phoneNumber) {
-    return phoneNumber.length == 11 && phoneNumber.startsWith('0');
+     // Check if the phone number is exactly 11 digits long
+    if (phoneNumber.length != 11) {
+      return false;
+    }
+
+    // Check if the phone number starts with '0'
+    if (!phoneNumber.startsWith('0')) {
+      return false;
+    }
+
+    // Ensure the second character is '3'
+    if (phoneNumber[1] != '3') {
+      return false;
+    }
+
+    // Check if all characters are digits
+    for (int i = 0; i < phoneNumber.length; i++) {
+      if (phoneNumber[i].codeUnitAt(0) < '0'.codeUnitAt(0) ||
+          phoneNumber[i].codeUnitAt(0) > '9'.codeUnitAt(0)) {
+        return false;
+      }
+    }
+
+    // If all checks pass, return true
+    return true;
+
   }
 
   bool isValidPassword(String password) {
-    return password.length >= 6;
+    return password.length >= 8;
   }
 
   bool isValidEmail(String email) {
-    final emailRegExp =
-        RegExp(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
-    return emailRegExp.hasMatch(email);
+   String pattern = r'^[a-zA-Z0-9._%+-]+@gmail\.com$';
+    RegExp regex = RegExp(pattern);
+
+    // Use the regex to validate the email
+    return regex.hasMatch(email);
   }
+  
 
   bool isValidName(String value) {
     final RegExp alphaRegExp = RegExp(r'^[a-zA-Z ]+$');
@@ -325,7 +353,7 @@ class SignupScreen extends StatelessWidget {
                           String email = emailController.text;
                           String password = passwordController.text;
                           String confirmPassword = confirmPasswordController.text;
-                          postData(name,phoneNumber,address,email,password);
+                          
                           if (name.isEmpty || phoneNumber.isEmpty || address.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
                             String title = "All Feilds are required";
                             String msg = "Please fill out all the asked information";
@@ -356,7 +384,7 @@ class SignupScreen extends StatelessWidget {
                             } 
                             else {
                             // All data is valid, proceed with sign-up
-                            
+                            postData(name,phoneNumber,address,email,password);
                             signUpWithEmailAndPassword(email, password, context);
                             }
                         },

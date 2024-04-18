@@ -397,8 +397,8 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                       decryptFile(file!);
                                     } else if (choice == 'encrypt') {
                                       try {
-                                        await _showCodeInputDialog(
-                                            file!); // Ensure awaiting the dialog
+                                        encryptFile(file);
+                                        showSnackbar(context, "File Encrypted Successfully"); // Ensure awaiting the dialog
                                       } catch (error) {
                                         print(
                                             "Error showing dialog: $error"); // Handle any errors
