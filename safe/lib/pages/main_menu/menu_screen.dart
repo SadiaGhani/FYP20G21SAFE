@@ -151,6 +151,10 @@ class MenuPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/awarness');
+                        },
                       child: Container(
                         margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -168,7 +172,7 @@ class MenuPage extends StatelessWidget {
                               ),
                             ),
                             const Text(
-                              'Remote Access',
+                              'Cyber Awareness',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -177,6 +181,7 @@ class MenuPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
                     ),
                     Expanded(
                       child: GestureDetector(
