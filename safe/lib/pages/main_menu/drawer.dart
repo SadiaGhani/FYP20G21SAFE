@@ -7,41 +7,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:safe/pages/sign_up_screen.dart';
 import 'package:safe/pages/user_profile_screen.dart';
 
-
 Future<void> signOut(context) async {
   bool isGoogleUser = await GoogleSignIn().isSignedIn();
   try {
     //bool isGoogleUser = await checkGoogleSignInStatus();
     if (isGoogleUser) {
-       try {
+      try {
         await FirebaseAuth.instance.signOut();
-                 print("User signed out successfully usignemail and password");
-                 Navigator.pushNamed(context, '/signup');
-                 } catch (e) {
-                  print("Error signing out: $e");
-                }
-      
+        print("User signed out successfully usignemail and password");
+        Navigator.pushNamed(context, '/signup');
+      } catch (e) {
+        print("Error signing out: $e");
+      }
     } else {
-      
       try {
         await GoogleSignInApi.logout();
-                 print("User signed out successfully from Google");
-                 Navigator.pushNamed(context, '/signup');
-                 } catch (e) {
-                  print("Error signing out: $e");
-                }
+        print("User signed out successfully from Google");
+        Navigator.pushNamed(context, '/signup');
+      } catch (e) {
+        print("Error signing out: $e");
+      }
       //Navigator.pushNamed(context, '/signup');
     }
   } catch (e) {
     print("Error signing out: $e");
   }
- 
 }
-
-
-
-
-
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -76,14 +67,14 @@ class AppDrawer extends StatelessWidget {
                       height:
                           10), // Add some spacing between the image and user name
                   Text(
-                    'User Name', // Replace with the user's name
+                    'Sadia Ghani', // Replace with the user's name
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                     ),
                   ),
                   Text(
-                    'user123@example.com', // Replace with the user's email or other info
+                    'sadiaghani22@gmail.com', // Replace with the user's email or other info
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -104,34 +95,34 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-             onTap: () async {
-               //Navigator.pushNamed(context, '/userprofile');
-               final user = await GoogleSignInApi.login();
-               String name = user?.displayName ?? "N/A";
+              onTap: () async {
+                //Navigator.pushNamed(context, '/userprofile');
+                final user = await GoogleSignInApi.login();
+                String name = user?.displayName ?? "N/A";
                 String email = user?.email ?? "N/A";
-               String picture = user?.photoUrl ?? "N/A";
-              Navigator.push(
-             context,
-             MaterialPageRoute(
-        builder: (context) => UserProfileScreen(
-          name: name,
-          email: email,
-          picture: picture,
-        ),
-      ),
-    );
-  // Handle home option
-  // final user = await signIn();  // Assuming signIn returns user data
-  // Navigator.pushNamed(
-  //   context,
-  //   '/userprofile',
-  //   arguments: {
-  //     'name': user.displayName ?? "N/A",
-  //     'email': user.email ?? "N/A",
-  //     'picture': user.photoUrl ?? "N/A",
-  //   },
-  // );
-},
+                String picture = user?.photoUrl ?? "N/A";
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfileScreen(
+                      name: name,
+                      email: email,
+                      picture: picture,
+                    ),
+                  ),
+                );
+                // Handle home option
+                // final user = await signIn();  // Assuming signIn returns user data
+                // Navigator.pushNamed(
+                //   context,
+                //   '/userprofile',
+                //   arguments: {
+                //     'name': user.displayName ?? "N/A",
+                //     'email': user.email ?? "N/A",
+                //     'picture': user.photoUrl ?? "N/A",
+                //   },
+                // );
+              },
             ),
             ListTile(
               leading: const Icon(
@@ -233,19 +224,19 @@ class AppDrawer extends StatelessWidget {
                 ));
                 //signOut(context);
                 try {
-                await FirebaseAuth.instance.signOut();
-                print("User signed out successfully");
-                Navigator.pushNamed(context, '/signup');
-               } catch (e) {
-               print("Error signing out: $e");
-               }
-              //  try{
-              //  await GoogleSignInApi.logout();
-              //    print("User signed out successfully from Google");
-              //    Navigator.pushNamed(context, '/signup');
-              //    } catch (e) {
-              //     print("Error signing out: $e");
-              //   }
+                  await FirebaseAuth.instance.signOut();
+                  print("User signed out successfully");
+                  Navigator.pushNamed(context, '/signup');
+                } catch (e) {
+                  print("Error signing out: $e");
+                }
+                //  try{
+                //  await GoogleSignInApi.logout();
+                //    print("User signed out successfully from Google");
+                //    Navigator.pushNamed(context, '/signup');
+                //    } catch (e) {
+                //     print("Error signing out: $e");
+                //   }
               },
             ),
           ],

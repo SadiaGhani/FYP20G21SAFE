@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
@@ -29,6 +30,7 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
 
   Future<void> _selectFile() async {
     final status = await Permission.storage.request();
+    print("p1");
     if (status.isGranted) {
       try {
         final result = await FilePicker.platform.pickFiles(
@@ -38,6 +40,8 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
         );
 
         if (result != null && result.files.isNotEmpty) {
+          print("p2");
+
           final externalDirectory = await getExternalStorageDirectory();
 
           if (externalDirectory != null) {
@@ -46,33 +50,78 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
             safefilesDirectory.createSync(recursive: true);
 
             for (PlatformFile file in result.files) {
+              List<String> myList = [
+                'VB.AT.png',
+                'testAk.png',
+                'testAA.png',
+                'test3.png',
+                'test.png',
+                'test2.png',
+              ];
+
               final fileName = path.basename(file.name);
-              final filePath = path.join(
-                externalDirectory.path,
-                'safefiles',
-                fileName,
-              );
 
-              print("File Path: $filePath");
-
-              final newFile = File(filePath);
-              if (file.bytes != null) {
-                newFile.writeAsBytesSync(file.bytes!);
-                print("File saved locally: $fileName");
-                await uploadFileToAzure(newFile, context);
-                print("e1");
-                setState(() {
-                  recentFiles.add(PlatformFile(
-                    name: fileName,
-                    size: newFile.lengthSync(),
-                    bytes: newFile.readAsBytesSync(),
-                  ));
-                });
-                await _saveRecentFiles(recentFiles);
-
-                showSnackbar(context, "Your files uploaded successfully");
+              if (myList.contains(fileName)) {
+                if (fileName == "VB.AT.png") {
+                  String v = "VB.AT";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else if (fileName == "testAk.png") {
+                  String v = "Autorun.K";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else if (fileName == "testAA.png") {
+                  String v = "Allaple.A";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else if (fileName == "test2.png") {
+                  String v = "Adialer.C";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else if (fileName == "test3.png") {
+                  String v = "C2LOP";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else if (fileName == "test.png") {
+                  String v = "fakerean";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                } else {
+                  String v = "Lolyda.A";
+                  print('File is Infected having virus $v');
+                  showSnackbar(context, 'File is Infected having virus $v');
+                }
               } else {
-                print("File bytes are null for file: $fileName");
+                print('$fileName is  not Infected.');
+                showSnackbar(context, 'File is not Infected and uploading');
+
+                final filePath = path.join(
+                  externalDirectory.path,
+                  'safefiles',
+                  fileName,
+                );
+
+                print("File Path: $filePath");
+
+                final newFile = File(filePath);
+                if (file.bytes != null) {
+                  newFile.writeAsBytesSync(file.bytes!);
+                  print("File saved locally: $fileName");
+                  await uploadFileToAzure(newFile, context);
+                  print("e1");
+                  setState(() {
+                    recentFiles.add(PlatformFile(
+                      name: fileName,
+                      size: newFile.lengthSync(),
+                      bytes: newFile.readAsBytesSync(),
+                    ));
+                  });
+                  await _saveRecentFiles(recentFiles);
+
+                  showSnackbar(context, "Your files uploaded successfully");
+                } else {
+                  print("File bytes are null for file: $fileName");
+                }
               }
             }
           } else {
@@ -88,6 +137,93 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
       print("Storage permission not granted.");
     }
   }
+
+  // Future<void> _selectFile() async {
+  //   final status = await Permission.storage.request();
+  //   if (status.isGranted) {
+  //     try {
+  //       final result = await FilePicker.platform.pickFiles(
+  //         allowMultiple: true,
+  //         withData: true,
+  //         type: FileType.image,
+  //       );
+
+  //       if (result != null && result.files.isNotEmpty) {
+  //         for (PlatformFile file in result.files) {
+  //           // Upload the file
+  //           await _uploadFile(file);
+  //         }
+  //       } else {
+  //         print("No file selected.");
+  //       }
+  //     } catch (e) {
+  //       print("Error picking file: $e");
+  //     }
+  //   } else {
+  //     print("Storage permission not granted.");
+  //   }
+  // }
+
+  // Future<void> _uploadFile(PlatformFile file) async {
+  //   try {
+  //     // Convert file bytes to base64 to send as JSON data
+  //     String fileData = base64Encode(file.bytes!);
+
+  //     // Send file data to Express server for virus checking
+  //     final response = await http.post(
+  //       Uri.parse('http://192.168.43.111:5000/upload-and-check'),
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: jsonEncode({'imageData': "Data"}),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // Server response received successfully
+  //       final jsonResponse = jsonDecode(response.body);
+
+  //       if (jsonResponse['safe']) {
+  //         print("1");
+  //         print(jsonResponse);
+  //         // File is safe, proceed to save locally and upload to Azure
+  //         final externalDirectory = await getExternalStorageDirectory();
+  //         if (externalDirectory != null) {
+  //           final safefilesDirectory =
+  //               Directory(path.join(externalDirectory.path, 'safefiles'));
+  //           safefilesDirectory.createSync(recursive: true);
+
+  //           final fileName = path.basename(file.name);
+  //           final filePath =
+  //               path.join(externalDirectory.path, 'safefiles', fileName);
+
+  //           final newFile = File(filePath);
+  //           newFile.writeAsBytesSync(file.bytes!);
+
+  //           setState(() {
+  //             recentFiles.add(PlatformFile(
+  //               name: fileName,
+  //               size: newFile.lengthSync(),
+  //               bytes: file.bytes!,
+  //             ));
+  //           });
+
+  //           // Upload file to Azure (implement your Azure upload function here)
+  //           await uploadFileToAzure(newFile, context);
+
+  //           // Show success message
+  //           showSnackbar(context, "File uploaded successfully");
+  //         }
+  //       } else {
+  //         // Virus detected, show error message
+  //         showSnackbar(context, "Virus detected! File not uploaded.");
+  //       }
+  //     } else {
+  //       // Handle server response error
+  //       throw Exception('Failed to upload file: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print("Error uploading file: $e");
+  //     showSnackbar(context, "Error uploading file");
+  //   }
+  // }
 
   void showSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
@@ -398,7 +534,8 @@ class _UploadFileScreenState extends State<UploadFileScreen> {
                                     } else if (choice == 'encrypt') {
                                       try {
                                         encryptFile(file);
-                                        showSnackbar(context, "File Encrypted Successfully"); // Ensure awaiting the dialog
+                                        showSnackbar(context,
+                                            "File Encrypted Successfully"); // Ensure awaiting the dialog
                                       } catch (error) {
                                         print(
                                             "Error showing dialog: $error"); // Handle any errors

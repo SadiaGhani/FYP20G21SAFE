@@ -379,7 +379,7 @@ Future<void> _sendImageToBackend(String imagePath) async {
         biometricOnly: true,
         useErrorDialogs: true,
         stickyAuth: true,
-        localizedReason: 'Authenticate with Face',
+        localizedReason: 'Authenticate with Fingerprint',
       );
     } catch (e) {
       print('Error: $e');
